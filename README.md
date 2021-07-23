@@ -6,14 +6,15 @@ The aim of this project proposal is to put forth the idea of bringing *Love Lett
 albiet with only two players.
 
 **What will this virtual Love Letters do?** <br />
-  Like other card games, this version of love letters will consisit of:
+  This version of love letters will aim to emulate playing its real life counterpart, consisiting of:
 - 2 Players
-- A deck of 16 cards
+- A Rule book
 - 8 unique types of cards with differing abilities
+- A deck of 16 cards
 
 **Who will use it?**<br />
   Virtual Love Letters removes the burdensome physical elements from the cardgame, making its fun
-  more portable and conveniant. Thus, it mainly targets students and people interested in recreationl activities. 
+  more portable and conveniant. Thus, it mainly targets students and people interested in recreational activities. 
 
 **Why choose this project?**<br />
   Well, my school's Board Game Club was an increadibly memorable and important part of my adolescence, and it
@@ -22,3 +23,18 @@ albiet with only two players.
   the joy and share my experience. 
 
   Either way, I hope ***you***, the reader, enjoy this game and have as much fun playing as I did designing it! 
+
+
+
+## User Stories: Love Letters Edition
+
+- As a user, I want to be able to shuffle the deck.
+- As a user, I want to be able to look at the rules and list of cards. 
+- As a user, I want to be able to draw cards from the deck. 
+- As a user, I want to play cards from my hand. 
+- As a user, I want to activate and respond to card effects.
+- As a user, I want to see the discard pile.  
+- As a user, I want to see the amount of cards left in deck.  
+- As a user, I want to start and end my turn. 
+
+
