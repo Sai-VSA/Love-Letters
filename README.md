@@ -28,13 +28,13 @@ albiet with only two players.
 
 ## User Stories: Love Letters Edition
 
-- As a user, I want to be able to shuffle the deck.
+- As a user, I want to start and end the game.
+- As a user, I want to start and end my turn. 
 - As a user, I want to be able to look at the rules and list of cards. 
 - As a user, I want to be able to draw cards from the deck. 
-- As a user, I want to play cards from my hand. 
+- As a user, I want to see and play cards from my hand. 
 - As a user, I want to activate and respond to card effects.
 - As a user, I want to see the discard pile.  
 - As a user, I want to see the amount of cards left in deck.  
-- As a user, I want to start and end my turn. 
 
 
