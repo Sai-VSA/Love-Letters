@@ -1,6 +1,8 @@
 package model;
 
 
+import static java.lang.Character.toUpperCase;
+
 public class CardEffects {
     Deck deck;
     Player player1;
@@ -23,22 +25,43 @@ public class CardEffects {
     // REQUIRES: A valid card name
     // MODIFIES: Player
     // EFFECTS: If guess is correct, eliminated guessed player
-    void playGuard(String s) {
+    public void playGuard(String s) {
+        String a = subGuard(s.toUpperCase());
         if (player1.returnPlayerTurn() == true) {
             int cardLocation = player1.returnSlotWithCard();
-            if (player2.returnPlayerHand()[cardLocation].returnCardName().equalsIgnoreCase(s.toLowerCase())) {
+            if (player2.returnPlayerHand()[cardLocation].returnCardName().equalsIgnoreCase(a)) {
                 player2.setEliminated();
             } else if (player1.returnPlayerTurn() == true) {
-                if (player1.returnPlayerHand()[cardLocation].returnCardName().equalsIgnoreCase(s.toLowerCase())) {
+                if (player1.returnPlayerHand()[cardLocation].returnCardName().equalsIgnoreCase(a)) {
                     player1.setEliminated();
                 }
             }
         }
     }
 
+    public String subGuard(String a) {
+        if (a == "A") {
+            return "Royal Subject";
+        } else if (a == "B") {
+            return "Gossip";
+        } else if (a == "C") {
+            return "Companion";
+        } else if (a == "D") {
+            return "Hero";
+        } else if (a == "E") {
+            return "Wizard";
+        } else if (a == "F") {
+            return "Lady";
+        } else if (a == "G") {
+            return "Princess";
+        } else {
+            return "Invalid letter";
+        }
+    }
+
     // REQUIRES: Opposing player's hand not empty
     // EFFECTS: Returns card in opposing players hand
-    String playRoyalSubject() {
+    public String playRoyalSubject() {
         if (player1.returnPlayerTurn() == true) {
             Player a = player2;
             Card c = a.returnPlayerHand()[a.returnSlotWithCard()];
@@ -56,7 +79,7 @@ public class CardEffects {
     // REQUIRES: Opposing player's hand not empty
     // MODIFIES: Player
     // EFFECTS: Returns card in opposing players hand
-    String playGossip() {
+    public String playGossip() {
 
         subGossip();
 
@@ -96,7 +119,7 @@ public class CardEffects {
 
     //MODIFIES: Player
     //EFFECT: Makes player immune until their next turn
-    void playCompanion() {
+    public void playCompanion() {
         if (player1.returnPlayerTurn() == true) {
             player1.flipImmune();
         } else if (player2.returnPlayerTurn() == true) {
@@ -108,7 +131,7 @@ public class CardEffects {
     //MODIFIES: Player
     //EFFECT: Discards opposing players hand and makes them draw,
     //        Eliminates player if princess is discarded
-    void playHero() {
+    public void playHero() {
         if (player1.returnPlayerTurn() == true && player2.returnImmune() == false) {
             Player a = player2;
             Card c = a.returnPlayerHand()[a.returnSlotWithCard()];
@@ -136,7 +159,7 @@ public class CardEffects {
     // REQUIRES: Hand not empty
     // MODIFIES: Player
     //EFFECT: Swaps hands between yourself and the other player
-    void playWizard() {
+    public void playWizard() {
         Card[] hold;
         if ((player1.returnImmune() && player2.returnImmune()) == false) {
             hold = player2.returnPlayerHand();

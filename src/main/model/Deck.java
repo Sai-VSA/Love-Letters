@@ -91,9 +91,9 @@ public class Deck {
         int num = 0;
         int down = 0;
 
-        Card[] accessedArray = new Card[15];
+        Card[] accessedArray = new Card[16];
 
-        while (deck.size() <= 10) {
+        while (deck.size() < 12) {
             rand = random.nextInt(16);
             if (!(Arrays.asList(accessedArray).contains(unshuffledDeck[rand]))) {
                 accessedArray[num] = unshuffledDeck[rand];

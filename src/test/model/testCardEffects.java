@@ -35,9 +35,9 @@ class testCardEffects {
         player1.flipTurn();
         player1.addCard(c1);
         player2.addCard(c1);
-        ce.playGuard("Princess");
+        ce.playGuard("G");
         assertFalse(player2.returnEliminated());
-        ce.playGuard("Hero");
+        ce.playGuard("D");
         assertTrue(player2.returnEliminated());
     }
 

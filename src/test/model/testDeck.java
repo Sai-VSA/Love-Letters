@@ -19,11 +19,11 @@ import java.util.Arrays;
 
     @Test
     public void testDrawCard() {
-        assertEquals(11, deck.returnDeck().size());
+        assertEquals(12, deck.returnDeck().size());
         deck.drawCard();
-        assertEquals(10, deck.returnDeck().size());
+        assertEquals(11, deck.returnDeck().size());
         assertFalse(deck.returnDeckState());
-        for (int i = 1; i<=9; i++) {
+        for (int i = 0; i<=10; i++) {
             deck.drawCard();
         }
         assertEquals(0, deck.returnDeck().size());
@@ -38,7 +38,7 @@ import java.util.Arrays;
         deck.discardCard(a);
         assertEquals(a, deck.returnDiscardPile()[0]);
         deck.discardCard(b);
-        assertEquals(a, deck.returnDiscardPile()[1]);
+        assertEquals(b, deck.returnDiscardPile()[1]);
 
     }
 

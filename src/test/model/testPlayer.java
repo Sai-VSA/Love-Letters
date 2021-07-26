@@ -74,7 +74,7 @@ public class testPlayer {
     public void testFlipImmune() {
         Player1.flipImmune();
         assertTrue(Player1.returnImmune());
-        Player1.flipTurn();
+        Player1.flipImmune();
         assertFalse(Player1.returnImmune());
     }
 
