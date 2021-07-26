@@ -25,18 +25,23 @@ public class CardEffects {
     // REQUIRES: A valid card name
     // MODIFIES: Player
     // EFFECTS: If guess is correct, eliminated guessed player
-    public void playGuard(String s) {
+    public String playGuard(String s) {
         String a = subGuard(s.toUpperCase());
         if (player1.returnPlayerTurn() == true) {
             int cardLocation = player2.returnSlotWithCard();
             if (player2.returnPlayerHand()[cardLocation].returnCardName().equalsIgnoreCase(a)) {
                 player2.setEliminated();
+                return "Your guess was correct!";
             }
-        } else if (player2.returnPlayerTurn() == true) {
+            return "Your guess was incorrect";
+        } else {
             int cardLocation = player1.returnSlotWithCard();
             if (player1.returnPlayerHand()[cardLocation].returnCardName().equalsIgnoreCase(a)) {
+                ;
                 player1.setEliminated();
+                return "Your guess was correct!";
             }
+            return "Your guess was incorrect";
         }
     }
 
@@ -64,11 +69,13 @@ public class CardEffects {
         if (player1.returnPlayerTurn() == true) {
             Player a = player2;
             Card c = a.returnPlayerHand()[a.returnSlotWithCard()];
-            return c.returnCardNumber() + " " + c.returnCardName() + "\n" + c.returnCardAbility();
+            return "Your opponents hand has: \n" + c.returnCardNumber() + " " + c.returnCardName() + "\n"
+                    + c.returnCardAbility();
         } else {
             Player a = player1;
             Card c = a.returnPlayerHand()[a.returnSlotWithCard()];
-            return c.returnCardNumber() + " " + c.returnCardName() + "\n" + c.returnCardAbility();
+            return "Your opponents hand has: \n" + c.returnCardNumber() + " " + c.returnCardName() + "\n"
+                    + c.returnCardAbility();
         }
     }
 

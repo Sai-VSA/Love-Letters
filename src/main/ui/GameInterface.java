@@ -30,7 +30,6 @@ public class GameInterface {
         String userInput = null;
 
         init();
-        gameState = 0;
         if (gameState == 0) {
             displayGUI();
             gameState = 1;
@@ -39,6 +38,10 @@ public class GameInterface {
         while ((!player1.returnEliminated()) && (!player2.returnEliminated())) {
             userInput = input.next();
             userInput = userInput.toLowerCase();
+
+            if (deck.returnDeck().size() == 0) {
+                lastRemaining();
+            }
 
             if (gameState == 1) {
                 baseState(userInput);
@@ -54,6 +57,7 @@ public class GameInterface {
         printEndGame();
     }
 
+
     // EFFECTS: initializes the players and scanner
     private void init() {
         input = new Scanner(System.in);
@@ -66,6 +70,7 @@ public class GameInterface {
         turnState = 1;
         playingPlayer = player1;
         player1.flipTurn();
+        gameState = 0;
     }
 
     // EFFECTS: processes user command at beginning interface
@@ -121,9 +126,9 @@ public class GameInterface {
         ce = new CardEffects(deck, player1, player2);
         deck.discardCard(playingPlayer.discardCard(lastPlayed));
 
-        if ((turnState == 1 && player2.returnImmune() == false)
-                || (turnState == 2 && player1.returnImmune() == false)) {
-            ce.playGuard(c);
+        if ((turnState == 1 && (player2.returnImmune() == false))
+                || (turnState == 2 && (player1.returnImmune() == false))) {
+            System.out.println(ce.playGuard(c));
         } else {
             System.out.println("The chosen opponent was immune this turn.");
         }
@@ -138,10 +143,11 @@ public class GameInterface {
         ce = new CardEffects(deck, player1, player2);
         deck.discardCard(playingPlayer.discardCard(c));
 
-        if ((turnState == 1 && player2.returnImmune() == true)
-                || (turnState == 2 && player1.returnImmune() == true)) {
+        if ((turnState == 1 && (player2.returnImmune() == true))
+                || (turnState == 2 && (player1.returnImmune() == true))) {
             System.out.println("The opponent was immune.");
         } else {
+            System.out.println("\nYour card \"" + c.returnCardName() + "\" was played successfully.");
             if (c.returnCardName().equals("Royal Subject")) {
                 System.out.println(ce.playRoyalSubject());
             } else if (c.returnCardName().equals("Gossip")) {
@@ -157,7 +163,6 @@ public class GameInterface {
             }
         }
 
-        System.out.println("\nYour card \"" + c.returnCardName() + "\" was played successfully.");
 
         gameState = 1;
         displayGUI();
@@ -257,7 +262,7 @@ public class GameInterface {
 
     // EFFECTS: prints a player's hand
     private void printPlayerHand(Player p) {
-        System.out.println("\t" + p.returnPlayerName() + "'s Hand:");
+        System.out.println("\n" + p.returnPlayerName() + "'s Hand:");
         if (!(p.returnPlayerHand()[0] == null)) {
             if ((p.returnHandSize() == 2)) {
                 System.out.println("\nPress A to play:");
@@ -276,13 +281,6 @@ public class GameInterface {
 
     // EFFECTS: Prints winning player name and down cards
     private void printEndGame() {
-        if (player1.returnEliminated() == true) {
-            System.out.println(player2.returnPlayerName() + " wins!");
-        } else if (player2.returnEliminated() == true) {
-            System.out.println(player1.returnPlayerName() + " wins!");
-        } else if (deck.returnDeck().size() == 0) {
-            lastRemaining();
-        }
 
 
         System.out.println("\nThe down cards were: ");
@@ -291,28 +289,55 @@ public class GameInterface {
         System.out.println(deck.returnDownCards()[2].returnCardName());
         System.out.println(deck.returnDownCards()[3].returnCardName());
 
-        System.out.println("\nThe discard cards were:");
+        System.out.println();
         printDiscardPile();
 
-        //printPlayerHand(?)
+        System.out.println("\n" + player1.returnPlayerName() + "'s hand:");
+        if (player1.returnHandSize() > 0) {
+            cardToText(player1.returnPlayerHand()[player1.returnSlotWithCard()]);
+        }
+        System.out.println("\n" + player2.returnPlayerName() + "'s hand:");
+        if (player2.returnHandSize() > 0) {
+            cardToText(player2.returnPlayerHand()[player2.returnSlotWithCard()]);
+        }
+
+        if (player1.returnEliminated() == true) {
+            System.out.println("\n" + player2.returnPlayerName() + " wins!");
+        } else if (player2.returnEliminated() == true) {
+            System.out.println();
+            System.out.println(player1.returnPlayerName() + " wins!");
+        } else if (deck.returnDeck().size() == 0) {
+            lastRemaining();
+        }
     }
 
     //
     // EFFECTS: Compares player wins with empty deck
     private void lastRemaining() {
-        if (player1.returnPlayerHand()[player1.returnSlotWithCard()].returnCardNumber()
-                == player2.returnPlayerHand()[player2.returnSlotWithCard()].returnCardNumber()) {
-            System.out.println("Tie game!");
-        } else if (player1.returnPlayerHand()[player1.returnSlotWithCard()].returnCardNumber()
-                > player2.returnPlayerHand()[player2.returnSlotWithCard()].returnCardNumber()) {
-            System.out.println(player1.returnPlayerName() + " wins!");
+        if ((player1.returnHandSize() == 0) || (player2.returnHandSize() == 0)) {
+            if (player1.returnHandSize() == 0) {
+                player1.setEliminated();
+            } else if (player2.returnHandSize() == 0) {
+                player2.setEliminated();
+            }
         } else {
-            System.out.println(player2.returnPlayerName() + " wins!");
+            if (player1.returnPlayerHand()[player1.returnSlotWithCard()].returnCardNumber()
+                    == player2.returnPlayerHand()[player2.returnSlotWithCard()].returnCardNumber()) {
+                System.out.println("Tie game!");
+            } else if (player1.returnPlayerHand()[player1.returnSlotWithCard()].returnCardNumber()
+                    > player2.returnPlayerHand()[player2.returnSlotWithCard()].returnCardNumber()) {
+
+                player2.setEliminated();
+            } else {
+
+                player1.setEliminated();
+            }
         }
     }
 
     // EFFECTS: displays basic game interface
     private void displayGUI() {
+        System.out.println();
         System.out.println(playingPlayer.returnPlayerName() + "'s turn: \t \t Cards remaining in deck: "
                 + deck.returnDeck().size());
         System.out.println("\nPress A to: Check Rules");
