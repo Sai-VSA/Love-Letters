@@ -290,6 +290,11 @@ public class GameInterface {
         System.out.println(deck.returnDownCards()[1].returnCardName());
         System.out.println(deck.returnDownCards()[2].returnCardName());
         System.out.println(deck.returnDownCards()[3].returnCardName());
+
+        System.out.println("\nThe discard cards were:");
+        printDiscardPile();
+
+        //printPlayerHand(?)
     }
 
     //

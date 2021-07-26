@@ -28,13 +28,14 @@ public class CardEffects {
     public void playGuard(String s) {
         String a = subGuard(s.toUpperCase());
         if (player1.returnPlayerTurn() == true) {
-            int cardLocation = player1.returnSlotWithCard();
+            int cardLocation = player2.returnSlotWithCard();
             if (player2.returnPlayerHand()[cardLocation].returnCardName().equalsIgnoreCase(a)) {
                 player2.setEliminated();
-            } else if (player1.returnPlayerTurn() == true) {
-                if (player1.returnPlayerHand()[cardLocation].returnCardName().equalsIgnoreCase(a)) {
-                    player1.setEliminated();
-                }
+            }
+        } else if (player2.returnPlayerTurn() == true) {
+            int cardLocation = player1.returnSlotWithCard();
+            if (player1.returnPlayerHand()[cardLocation].returnCardName().equalsIgnoreCase(a)) {
+                player1.setEliminated();
             }
         }
     }
@@ -52,10 +53,8 @@ public class CardEffects {
             return "Wizard";
         } else if (a == "F") {
             return "Lady";
-        } else if (a == "G") {
-            return "Princess";
         } else {
-            return "Invalid letter";
+            return "Princess";
         }
     }
 
@@ -66,14 +65,11 @@ public class CardEffects {
             Player a = player2;
             Card c = a.returnPlayerHand()[a.returnSlotWithCard()];
             return c.returnCardNumber() + " " + c.returnCardName() + "\n" + c.returnCardAbility();
-        } else if (player2.returnPlayerTurn() == true) {
+        } else {
             Player a = player1;
             Card c = a.returnPlayerHand()[a.returnSlotWithCard()];
             return c.returnCardNumber() + " " + c.returnCardName() + "\n" + c.returnCardAbility();
-        } else {
-            return "That player is immune to other card effects this turn.";
         }
-
     }
 
     // REQUIRES: Opposing player's hand not empty
