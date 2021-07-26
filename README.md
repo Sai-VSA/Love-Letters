@@ -35,6 +35,7 @@ albiet with only two players.
 - As a user, I want to see and play cards from my hand. 
 - As a user, I want to activate and respond to card effects.
 - As a user, I want to see the discard pile.  
+- As a user, I want to be able to add cards from hand to the discard pile.
 - As a user, I want to see the amount of cards left in deck.  
 
 
