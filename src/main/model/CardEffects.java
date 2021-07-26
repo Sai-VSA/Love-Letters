@@ -132,9 +132,10 @@ public class CardEffects {
             if ((c.returnCardName() == "Princess" || c.returnCardName() == "Hero")) {
                 player2.setEliminated();
             } else {
-                player2.discardCard(player2.returnPlayerHand()[player2.returnSlotWithCard()]);
+                int b = player2.returnSlotWithCard();
+                deck.discardCard(player2.returnPlayerHand()[b]);
                 player2.addCard(deck.drawCard());
-                deck.discardCard(player2.returnPlayerHand()[player2.returnSlotWithCard()]);
+                player2.discardCard(player2.returnPlayerHand()[b]);
             }
         } else if (player2.returnPlayerTurn() == true) {
             Player a = player1;
@@ -142,9 +143,10 @@ public class CardEffects {
             if (c.returnCardName() == "Princess" || c.returnCardName() == "Hero") {
                 player1.setEliminated();
             } else {
-                player1.discardCard(player1.returnPlayerHand()[player1.returnSlotWithCard()]);
-                deck.discardCard(player1.returnPlayerHand()[player1.returnSlotWithCard()]);
+                int b = player1.returnSlotWithCard();
+                deck.discardCard(player1.returnPlayerHand()[b]);
                 player1.addCard(deck.drawCard());
+                player1.discardCard(player1.returnPlayerHand()[b]);
             }
         }
 
