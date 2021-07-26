@@ -121,8 +121,12 @@ public class GameInterface {
         ce = new CardEffects(deck, player1, player2);
         deck.discardCard(playingPlayer.discardCard(lastPlayed));
 
-
-        ce.playGuard(c);
+        if ((turnState == 1 && player2.returnImmune() == false)
+                || (turnState == 2 && player1.returnImmune() == false)) {
+            ce.playGuard(c);
+        } else {
+            System.out.println("The chosen opponent was immune this turn.");
+        }
 
 
         gameState = 1;
@@ -141,7 +145,7 @@ public class GameInterface {
             if (c.returnCardName().equals("Royal Subject")) {
                 System.out.println(ce.playRoyalSubject());
             } else if (c.returnCardName().equals("Gossip")) {
-                ce.playGossip();
+                System.out.println(ce.playGossip());
             } else if (c.returnCardName().equals("Companion")) {
                 ce.playCompanion();
             } else if (c.returnCardName().equals("Hero")) {
@@ -153,7 +157,7 @@ public class GameInterface {
             }
         }
 
-        System.out.println("Your card \"" + c.returnCardName() + "\" was played successfully.");
+        System.out.println("\nYour card \"" + c.returnCardName() + "\" was played successfully.");
 
         gameState = 1;
         displayGUI();
@@ -164,7 +168,7 @@ public class GameInterface {
         if (turnState == 1) {
             if (player1.returnDrewCard() == false) {
                 Card a = deck.returnDeck().peek();
-                System.out.println("\nYou drew the " + a.returnCardName() + ".");
+                System.out.println("You drew the " + a.returnCardName() + ".");
                 player1.addCard(deck.drawCard());
                 player1.flipDraw();
             } else {
@@ -241,8 +245,8 @@ public class GameInterface {
     private void printDiscardPile() {
         int c = (deck.returnCardsInDiscard());
         System.out.println("The discard pile contains:");
-        for (int i = 0; i < c; i++) {
-            System.out.println(i + ". " + deck.returnDiscardPile()[i].returnCardName());
+        for (int i = 1; i < (c + 1); i++) {
+            System.out.println(i + ". " + deck.returnDiscardPile()[i - 1].returnCardName());
         }
     }
 
@@ -304,7 +308,7 @@ public class GameInterface {
 
     // EFFECTS: displays basic game interface
     private void displayGUI() {
-        System.out.println(playingPlayer.returnPlayerName() + "'s turn : \t \t Cards remaining in deck: "
+        System.out.println(playingPlayer.returnPlayerName() + "'s turn: \t \t Cards remaining in deck: "
                 + deck.returnDeck().size());
         System.out.println("\nPress A to: Check Rules");
         System.out.println("Press B to: Draw Card");

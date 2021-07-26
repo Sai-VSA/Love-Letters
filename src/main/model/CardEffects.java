@@ -81,13 +81,21 @@ public class CardEffects {
     // EFFECTS: Returns card in opposing players hand
     public String playGossip() {
 
-        subGossip();
+        if (player1.returnPlayerTurn() == true) {
+            p1 = player1;
+            p2 = player2;
+            c1 = p1.returnPlayerHand()[p1.returnSlotWithCard()];
+            c2 = p2.returnPlayerHand()[p2.returnSlotWithCard()];
+        } else if (player2.returnPlayerTurn() == true) {
+            p1 = player2;
+            p2 = player1;
+            c1 = p1.returnPlayerHand()[p1.returnSlotWithCard()];
+            c2 = p2.returnPlayerHand()[p2.returnSlotWithCard()];
+        }
 
         if (c1.returnCardNumber() == c2.returnCardNumber()) {
             return p1.returnPlayerName() + "'s " + c1.returnCardName() + " ties with "
                     + p2.returnPlayerName() + "'s " + c2.returnCardName();
-        } else if (p2.returnImmune() == true) {
-            return "That player is immune to other card effects this turn.";
         } else {
             if (c1.returnCardNumber() > c2.returnCardNumber()) {
                 p2.setEliminated();
@@ -96,23 +104,6 @@ public class CardEffects {
             }
             return p1.returnPlayerName() + "'s " + c1.returnCardName() + " beats "
                     + p2.returnPlayerName() + "'s " + c2.returnCardName();
-        }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: Initializes variables for gossip
-    private void subGossip() {
-
-        if (player1.returnPlayerTurn() == true && player2.returnImmune() == false) {
-            p1 = player1;
-            p2 = player2;
-            c1 = p1.returnPlayerHand()[p1.returnSlotWithCard()];
-            c2 = p2.returnPlayerHand()[p2.returnSlotWithCard()];
-        } else if (player2.returnPlayerTurn() == true && player1.returnImmune() == false) {
-            p1 = player2;
-            p2 = player1;
-            c1 = p1.returnPlayerHand()[p1.returnSlotWithCard()];
-            c2 = p2.returnPlayerHand()[p2.returnSlotWithCard()];
         }
     }
 
@@ -132,7 +123,7 @@ public class CardEffects {
     //EFFECT: Discards opposing players hand and makes them draw,
     //        Eliminates player if princess is discarded
     public void playHero() {
-        if (player1.returnPlayerTurn() == true && player2.returnImmune() == false) {
+        if (player1.returnPlayerTurn() == true) {
             Player a = player2;
             Card c = a.returnPlayerHand()[a.returnSlotWithCard()];
             if ((c.returnCardName() == "Princess" || c.returnCardName() == "Hero")) {
@@ -142,7 +133,7 @@ public class CardEffects {
                 player2.addCard(deck.drawCard());
                 deck.discardCard(player2.returnPlayerHand()[player2.returnSlotWithCard()]);
             }
-        } else if (player2.returnPlayerTurn() == true && player1.returnImmune() == false) {
+        } else if (player2.returnPlayerTurn() == true) {
             Player a = player1;
             Card c = a.returnPlayerHand()[a.returnSlotWithCard()];
             if (c.returnCardName() == "Princess" || c.returnCardName() == "Hero") {
@@ -161,12 +152,11 @@ public class CardEffects {
     //EFFECT: Swaps hands between yourself and the other player
     public void playWizard() {
         Card[] hold;
-        if ((player1.returnImmune() && player2.returnImmune()) == false) {
-            hold = player2.returnPlayerHand();
-            player2.setHand(player1.returnPlayerHand());
-            player1.setHand(hold);
-        }
+        hold = player2.returnPlayerHand();
+        player2.setHand(player1.returnPlayerHand());
+        player1.setHand(hold);
     }
-
 }
+
+
 
