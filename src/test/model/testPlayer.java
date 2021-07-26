@@ -83,6 +83,15 @@ public class testPlayer {
         assertEquals("Sai", Player1.returnPlayerName());
         assertEquals("Jimmy", Player2.returnPlayerName());
     }
+
+    @Test
+    public void testReturnSlotWithCard() {
+        Player1.addCard(Companion);
+        assertEquals(0, Player1.returnSlotWithCard());
+        Player1.addCard(Guard);
+        Player1.discardCard(Companion);
+        assertEquals(1, Player1.returnSlotWithCard());
+    }
 }
 
 

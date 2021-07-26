@@ -133,7 +133,26 @@ public class Player {
     public void flipImmune() {
         this.immune = (!immune);
     }
+
+    /* REQUIRES: Player to have a card in hand
+     * EFFECTS: Returns slot with player card
+     */
+    public int returnSlotWithCard() {
+
+        if (playerHand[1] == null) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
+    public void setHand(Card[] c) {
+        playerHand = c;
+    }
 }
+
+
+
 
 
 

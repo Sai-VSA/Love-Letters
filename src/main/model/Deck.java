@@ -93,14 +93,14 @@ public class Deck {
 
         Card[] accessedArray = new Card[15];
 
-        while (deck.size() <= 11) {
+        while (deck.size() <= 10) {
             rand = random.nextInt(16);
             if (!(Arrays.asList(accessedArray).contains(unshuffledDeck[rand]))) {
                 accessedArray[num] = unshuffledDeck[rand];
                 deck.add(unshuffledDeck[rand]);
                 num++;
             }
-            while ((deck.size() > 11) && (Arrays.asList(downCards).contains(null))) {
+            while ((deck.size() > 10) && (Arrays.asList(downCards).contains(null))) {
                 rand = random.nextInt(16);
                 if (!(Arrays.asList(accessedArray).contains(unshuffledDeck[rand]))) {
                     accessedArray[num] = unshuffledDeck[rand];
@@ -170,6 +170,10 @@ public class Deck {
      */
     public boolean returnDeckState() {
         return empty;
+    }
+
+    public Card[] returnDownCards() {
+        return downCards;
     }
 }
 
