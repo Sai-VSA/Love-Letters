@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class testPlayer {
+public class TestPlayer {
     Player Player1;
     Player Player2;
     Card Guard;

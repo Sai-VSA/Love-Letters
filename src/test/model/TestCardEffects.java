@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class testCardEffects {
+class TestCardEffects {
     Deck deck;
     Player player1;
     Player player2;

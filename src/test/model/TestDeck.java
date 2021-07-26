@@ -9,7 +9,7 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.Arrays;
 
-    class testDeck {
+    class TestDeck {
     Deck deck;
 
     @BeforeEach

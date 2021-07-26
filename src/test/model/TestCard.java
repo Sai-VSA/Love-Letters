@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class testCard {
+class TestCard {
     private Card Guard;
     private Card RoyalSubject;
     private Card Gossip;

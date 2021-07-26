@@ -270,20 +270,36 @@ public class GameInterface {
     }
 
 
-    // REQUIRES: One of the players is eliminated
-    // EFFECTS: Prints winning player name and
+    // EFFECTS: Prints winning player name and down cards
     private void printEndGame() {
         if (player1.returnEliminated() == true) {
             System.out.println(player2.returnPlayerName() + " wins!");
         } else if (player2.returnEliminated() == true) {
             System.out.println(player1.returnPlayerName() + " wins!");
+        } else if (deck.returnDeck().size() == 0) {
+            lastRemaining();
         }
+
 
         System.out.println("\nThe down cards were: ");
         System.out.println(deck.returnDownCards()[0].returnCardName());
         System.out.println(deck.returnDownCards()[1].returnCardName());
         System.out.println(deck.returnDownCards()[2].returnCardName());
         System.out.println(deck.returnDownCards()[3].returnCardName());
+    }
+
+    //
+    // EFFECTS: Compares player wins with empty deck
+    private void lastRemaining() {
+        if (player1.returnPlayerHand()[player1.returnSlotWithCard()].returnCardNumber()
+                == player2.returnPlayerHand()[player2.returnSlotWithCard()].returnCardNumber()) {
+            System.out.println("Tie game!");
+        } else if (player1.returnPlayerHand()[player1.returnSlotWithCard()].returnCardNumber()
+                > player2.returnPlayerHand()[player2.returnSlotWithCard()].returnCardNumber()) {
+            System.out.println(player1.returnPlayerName() + " wins!");
+        } else {
+            System.out.println(player2.returnPlayerName() + " wins!");
+        }
     }
 
     // EFFECTS: displays basic game interface
