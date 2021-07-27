@@ -12,6 +12,7 @@ public class CardEffects {
     Player p2;
     Card c2;
 
+    //EFFECTS: Instantiates CardEffect fields
     public CardEffects(Deck deck, Player p1, Player p2) {
         this.deck = deck;
         player1 = p1;
@@ -37,7 +38,7 @@ public class CardEffects {
         } else {
             int cardLocation = player1.returnSlotWithCard();
             if (player1.returnPlayerHand()[cardLocation].returnCardName().equalsIgnoreCase(a)) {
-                ;
+
                 player1.setEliminated();
                 return "Your guess was correct!";
             }

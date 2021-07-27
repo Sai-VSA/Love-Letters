@@ -58,6 +58,7 @@ public class GameInterface {
     }
 
 
+    // MODIFIES: this, player
     // EFFECTS: initializes the players and scanner
     private void init() {
         input = new Scanner(System.in);
@@ -73,6 +74,7 @@ public class GameInterface {
         gameState = 0;
     }
 
+    // MODIFIES: this
     // EFFECTS: processes user command at beginning interface
     private void baseState(String command) {
         if (command.equals("a")) {
@@ -95,6 +97,7 @@ public class GameInterface {
         }
     }
 
+    // MODIFIES: this
     // EFFECT: Opens and activates interface for playing a card
     private void cardPlayer(String command) {
         int a;
@@ -121,6 +124,7 @@ public class GameInterface {
         }
     }
 
+    // MODIFIES: this
     // EFFECT: plays guard from player's hand
     private void guardState(String c) {
         ce = new CardEffects(deck, player1, player2);
@@ -138,6 +142,7 @@ public class GameInterface {
         displayGUI();
     }
 
+    // MODIFIES: this, deck, player
     // EFFECT: plays a card from player's hand
     private void playCard(Card c) {
         ce = new CardEffects(deck, player1, player2);
@@ -168,6 +173,7 @@ public class GameInterface {
         displayGUI();
     }
 
+    // MODIFIES: this, player
     // EFFECT: Draws a card from deck and adds it to player's hand
     private void drawAndReset() {
         if (turnState == 1) {
@@ -192,6 +198,7 @@ public class GameInterface {
     }
 
 
+    // MODIFIES: this
     // EFFECTS: processes user command during Check Rules
     private void checkRuleState(String command) {
         if (command.equals("a")) {
@@ -207,6 +214,7 @@ public class GameInterface {
     }
 
 
+    // MODIFIES: this
     // EFFECTS: displays rules and list of cards to user
     private void displayRules() {
         System.out.println("\n   1. Set Up: The game starts with a pre-shuffled deck on a random players turn.");
@@ -281,8 +289,6 @@ public class GameInterface {
 
     // EFFECTS: Prints winning player name and down cards
     private void printEndGame() {
-
-
         System.out.println("\nThe down cards were: ");
         System.out.println(deck.returnDownCards()[0].returnCardName());
         System.out.println(deck.returnDownCards()[1].returnCardName());
@@ -311,7 +317,7 @@ public class GameInterface {
         }
     }
 
-    //
+    //// MODIFIES: this, Player
     // EFFECTS: Compares player wins with empty deck
     private void lastRemaining() {
         if ((player1.returnHandSize() == 0) || (player2.returnHandSize() == 0)) {
@@ -347,6 +353,7 @@ public class GameInterface {
         System.out.println("Press E to: End Turn");
     }
 
+    // MODIFIES: this, Player
     // EFFECTS: passes to next player's turn
     private void nextTurn() {
 

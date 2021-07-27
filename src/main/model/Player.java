@@ -146,6 +146,8 @@ public class Player {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: Sets player hand to a specific card
     public void setHand(Card[] c) {
         playerHand = c;
     }
