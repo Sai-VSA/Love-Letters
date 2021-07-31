@@ -326,7 +326,7 @@ public class GameInterface {
             } else if (player2.returnHandSize() == 0) {
                 player2.setEliminated();
             }
-        } else {
+        } else if (player1.returnHandSize() == 1 && player2.returnHandSize() == 1) {
             if (player1.returnPlayerHand()[player1.returnSlotWithCard()].returnCardNumber()
                     == player2.returnPlayerHand()[player2.returnSlotWithCard()].returnCardNumber()) {
                 System.out.println("Tie game!");
@@ -335,7 +335,6 @@ public class GameInterface {
 
                 player2.setEliminated();
             } else {
-
                 player1.setEliminated();
             }
         }

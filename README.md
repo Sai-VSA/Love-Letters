@@ -37,5 +37,7 @@ albiet with only two players.
 - As a user, I want to see the discard pile.  
 - As a user, I want to be able to add cards from hand to the discard pile.
 - As a user, I want to see the amount of cards left in deck.  
+- As a user, I want to be able save game state to the file.
+- As a user, I want to be able to continue the game again from file.
 
 
