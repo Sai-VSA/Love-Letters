@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 import java.lang.*;
 
 // Represents a card in Love Letters
@@ -59,4 +61,5 @@ public class Card {
     public String returnCardAbility() {
         return this.cardAbility;
     }
+
 }

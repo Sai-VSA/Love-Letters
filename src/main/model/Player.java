@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 public class Player {
     private final String playerName;
     private Card[] playerHand;
@@ -151,6 +153,9 @@ public class Player {
     public void setHand(Card[] c) {
         playerHand = c;
     }
+
+
+
 }
 
 

@@ -172,8 +172,24 @@ public class Deck {
         return empty;
     }
 
+    /*
+     * EFFECTS: Returns downCards in the deck
+     */
     public Card[] returnDownCards() {
         return downCards;
+    }
+
+    /* MODIFIES: this
+     * EFFECTS: Reloads deck with new values
+     */
+    public void reloadDeck(Queue<Card> deck, Card[] discardPile, Card[] downCards) {
+        this.deck = deck;
+        this.discardPile = discardPile;
+        this.downCards = downCards;
+
+        if (deck.size() == 0) {
+            this.empty = true;
+        }
     }
 }
 

@@ -1,12 +1,14 @@
 package ui;
 
 import model.*;
+import persistence.JsonReader;
 
+import java.io.IOException;
 import java.util.Scanner;
-
+import java.io.FileNotFoundException;
 
 public class GameInterface {
-
+    private static final String JSON_STORE = "./data/Test1";
     private Player player1;
     private Player player2;
     private Deck deck;
@@ -16,11 +18,11 @@ public class GameInterface {
     private Scanner input;
     private CardEffects ce;
     private Card lastPlayed;
-
+    private JsonReader jsonReader;
 
     /* EFFECT: starts game
      */
-    public GameInterface() {
+    public GameInterface() throws FileNotFoundException {
         startGame();
     }
 
@@ -72,6 +74,7 @@ public class GameInterface {
         playingPlayer = player1;
         player1.flipTurn();
         gameState = 0;
+        jsonReader = new JsonReader(JSON_STORE);
     }
 
     // MODIFIES: this
@@ -85,13 +88,15 @@ public class GameInterface {
                 && command.equals("c")) {
             printPlayerHand(playingPlayer);
             gameState = 3;
-            System.out.println("\n Press C to go back to main.");
+            System.out.println("\nPress C to go back to main.");
         } else if (command.equals("c")) {
             printPlayerHand(playingPlayer);
         } else if (command.equals("d")) {
             printDiscardPile();
         } else if (command.equals("e")) {
             nextTurn();
+        } else if (command.equals("g")) {
+            loadState();
         } else {
             System.out.println("Please choose a valid option.");
         }
@@ -350,6 +355,7 @@ public class GameInterface {
         System.out.println("Press C to: Check Hand");
         System.out.println("Press D to: Check Discard Pile");
         System.out.println("Press E to: End Turn");
+        System.out.println("\nPress G to: Reload Previously Saved Game");
     }
 
     // MODIFIES: this, Player
@@ -380,6 +386,39 @@ public class GameInterface {
         }
 
     }
+
+
+    // this, Deck
+    // EFFECTS: Loads previously saved gameState from file
+    private void loadState() {
+        try {
+            player1 = jsonReader.readP1();
+            player2 = jsonReader.readP2();
+            gameState = jsonReader.readGameState();
+            deck.reloadDeck(jsonReader.readDeck(), jsonReader.readDiscard(), jsonReader.readDown());
+            loadBoard();
+            System.out.println("Save successfully loaded.");
+        } catch (IOException e) {
+            System.out.println("Unable to read from " + JSON_STORE);
+        }
+        displayGUI();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Makes other variables match loaded values
+    private void loadBoard() {
+        if (player1.returnPlayerTurn() == true) {
+            turnState = 1;
+            playingPlayer = player1;
+        } else {
+            turnState = 2;
+            playingPlayer = player2;
+        }
+        int discardSize = (16 - (deck.returnDeck().size() + 4 + player1.returnHandSize() + player2.returnHandSize()));
+
+        lastPlayed = deck.returnDiscardPile()[discardSize - 1];
+    }
+
 
 }
 
