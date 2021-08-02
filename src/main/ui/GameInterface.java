@@ -2,13 +2,14 @@ package ui;
 
 import model.*;
 import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import java.io.IOException;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 
 public class GameInterface {
-    private static final String JSON_STORE = "./data/Test1";
+    private static final String JSON_STORE = "./data/saveFile.json";
     private Player player1;
     private Player player2;
     private Deck deck;
@@ -19,6 +20,7 @@ public class GameInterface {
     private CardEffects ce;
     private Card lastPlayed;
     private JsonReader jsonReader;
+    private JsonWriter jsonWriter;
 
     /* EFFECT: starts game
      */
@@ -75,6 +77,7 @@ public class GameInterface {
         player1.flipTurn();
         gameState = 0;
         jsonReader = new JsonReader(JSON_STORE);
+        jsonWriter = new JsonWriter(JSON_STORE);
     }
 
     // MODIFIES: this
@@ -95,6 +98,8 @@ public class GameInterface {
             printDiscardPile();
         } else if (command.equals("e")) {
             nextTurn();
+        } else if (command.equals("f")) {
+            saveState();
         } else if (command.equals("g")) {
             loadState();
         } else {
@@ -355,7 +360,8 @@ public class GameInterface {
         System.out.println("Press C to: Check Hand");
         System.out.println("Press D to: Check Discard Pile");
         System.out.println("Press E to: End Turn");
-        System.out.println("\nPress G to: Reload Previously Saved Game");
+        System.out.println("\nPress F to: Save As Recent Game");
+        System.out.println("Press G to: Reload Previously Saved Game");
     }
 
     // MODIFIES: this, Player
@@ -385,6 +391,19 @@ public class GameInterface {
             System.out.println("\nPlease finish both draw and play phases before trying to end your turn.");
         }
 
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Makes other variables match loaded values
+    private void saveState() {
+        try {
+            jsonWriter.open();
+            jsonWriter.writeFile(player1, player2, deck);
+            jsonWriter.close();
+            System.out.println("Saved Successfully.");
+        } catch (FileNotFoundException e) {
+            System.out.println("File destination not present.");
+        }
     }
 
 

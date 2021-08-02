@@ -35,6 +35,7 @@ public class JsonWriter {
         json.put("player1", writePlayer(p1));
         json.put("player2", writePlayer(p2));
         json.put("deck", writeDeck(d));
+        json.put("gameState", 1);
         saveToFile(json.toString(TAB));
     }
 

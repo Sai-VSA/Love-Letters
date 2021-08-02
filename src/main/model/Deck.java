@@ -198,7 +198,7 @@ public class Deck implements Runner {
 
     //REQUIRES: UI already run
     //MODIFIES: data
-    //EFFECTS: Converts Deck information for JSON readibility
+    //EFFECTS: Converts Deck information for JSON readability
     @Override
     public JSONObject toJson() {
         int num = 0;
@@ -209,25 +209,14 @@ public class Deck implements Runner {
 
         for (Card c : deck) {
             JSONObject a = new JSONObject();
-            a.put("cardName",c.returnCardName());
-            a.put("cardNumber",c.returnCardNumber());
+            a.put("cardName", c.returnCardName());
+            a.put("cardNumber", c.returnCardNumber());
             deckArray.put(num, a);
             num++;
         }
 
-        for (int i = 0; i < returnCardsInDiscard(); i++) {
-            JSONObject a = new JSONObject();
-            a.put("cardName",discardPile[i].returnCardName());
-            a.put("cardNumber",discardPile[i].returnCardNumber());
-            discardArray.put(i, a);
-        }
-
-        for (int i = 0; i < 4; i++) {
-            JSONObject a = new JSONObject();
-            a.put("cardName",downCards[i].returnCardName());
-            a.put("cardNumber",downCards[i].returnCardNumber());
-            downArray.put(i, a);
-        }
+        toJsonArray(discardPile, returnCardsInDiscard(), discardArray);
+        toJsonArray(downCards, 4, downArray);
 
         deckMain.put("deck", deckArray);
         deckMain.put("discardPile", discardArray);
@@ -236,5 +225,15 @@ public class Deck implements Runner {
         return deckMain;
     }
 
+    //REQUIRES: UI already run
+    //EFFECTS: Converts Array information for JSON readability
+    public void toJsonArray(Card[] c, int num, JSONArray b) {
+        for (int i = 0; i < num; i++) {
+            JSONObject a = new JSONObject();
+            a.put("cardName", c[i].returnCardName());
+            a.put("cardNumber", c[i].returnCardNumber());
+            b.put(i, a);
+        }
+    }
 }
 ///
