@@ -27,6 +27,7 @@ public class JsonWriterTest {
             Deck d1 = new Deck();
             Player p1 = new Player("player1");
             p1.addCard(d1.drawCard());
+            p1.addCard(d1.drawCard());
             Player p2 = new Player("player2");
             p2.addCard(d1.drawCard());
             JsonWriter writer = new JsonWriter("./data/Test3");
@@ -40,7 +41,7 @@ public class JsonWriterTest {
             assertFalse(p1.returnPlayerTurn());
             assertFalse(p1.returnDrewCard());
             assertFalse(p1.returnImmune());
-            assertEquals(1, p1.returnHandSize());
+            assertEquals(2, p1.returnHandSize());
 
             p2 = reader.readP2();
             assertEquals("player2", p2.returnPlayerName());
