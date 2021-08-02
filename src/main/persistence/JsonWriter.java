@@ -29,7 +29,7 @@ public class JsonWriter {
 
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of a player to file
+    // EFFECTS: writes JSON representation of game variables to file
     public void writeFile(Player p1, Player p2, Deck d) {
         JSONObject json = new JSONObject();
         json.put("player1", writePlayer(p1));

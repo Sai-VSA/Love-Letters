@@ -33,7 +33,7 @@ public class JsonReader {
         return parsePlayer(jsonObject.getJSONObject("player1"));
     }
 
-    // EFFECTS: reads player1 state from file and returns it;
+    // EFFECTS: reads player2 state from file and returns it;
     // throws IOException if an error occurs reading data from file
     public Player readP2() throws IOException {
         String jsonData = readFile(source);
@@ -122,7 +122,7 @@ public class JsonReader {
         return a;
     }
 
-    // EFFECTS: pares discardPile from JSON object and returns it
+    // EFFECTS: parses discardPile from JSON object and returns it
     public Card[] parseDiscard(JSONArray jsonObject, int num) {
         int a = 0;
         Card[] c = new Card[num];
@@ -134,7 +134,7 @@ public class JsonReader {
         return c;
     }
 
-    // EFFECTS: pares Deck from JSON object and returns it
+    // EFFECTS: parses Deck from JSON object and returns it
     public Queue<Card> parseDeck(JSONArray jsonObject) {
 
         Queue<Card> c = new LinkedList<Card>();

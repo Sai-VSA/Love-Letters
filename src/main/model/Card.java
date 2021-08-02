@@ -34,7 +34,7 @@ public class Card {
             this.cardAbility = "Swap hands with your opponent.";
         } else if (cardName.equals("Lady")) {
             this.cardAbility = "You must discard this card if you are holding either the hero"
-                    + "or the wizard.";
+                    + " or the wizard.";
         } else if (cardName.equals("Princess")) {
             this.cardAbility = "You lose if you discard this card.";
         }
