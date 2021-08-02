@@ -141,7 +141,7 @@ class TestCardEffects {
     }
 
     @Test
-     void testPlayGossipWin() {
+    void testPlayGossipWin() {
         player2.flipTurn();
         player2.addCard(Princess);
         player1.addCard(Princess);
@@ -159,10 +159,10 @@ class TestCardEffects {
         player2.addCard(Princess);
         ce.playGossip();
         assertFalse(player2.returnEliminated());
-        player2.discardCard(Princess);
-        player2.addCard(Hero);
+        player1.discardCard(Princess);
+        player1.addCard(Hero);
         ce.playGossip();
-        assertTrue(player2.returnEliminated());
+        assertTrue(player1.returnEliminated());
     }
 
     @Test
@@ -178,12 +178,12 @@ class TestCardEffects {
     }
 
 
-
     @Test
     void testPlayCompanion() {
         player2.flipTurn();
-    ce.playCompanion();
-    assertTrue(player2.returnImmune());
+        ce.playCompanion();
+        assertTrue(player2.returnPlayerTurn());
+        assertTrue(player2.returnImmune());
         player1.flipTurn();
         ce.playCompanion();
         assertTrue(player1.returnImmune());
@@ -201,15 +201,17 @@ class TestCardEffects {
     }
 
     @Test
-     void testPlayHero() {
+    void testPlayHero() {
         player1.addCard(Guard);
         player2.addCard(Hero);
         player2.flipTurn();
+        assertTrue(player2.returnPlayerTurn());
         c4 = deck.returnDeck().peek();
         ce.playHero();
         assertEquals(c4.returnCardName(), player1.returnPlayerHand()[player1.returnSlotWithCard()].returnCardName());
         player1.discardCard(c4);
         player1.addCard(Princess);
+        assertEquals("Princess", player1.returnPlayerHand()[player1.returnSlotWithCard()].returnCardName());
         assertFalse(player1.returnEliminated());
         ce.playHero();
         assertTrue(player1.returnEliminated());
@@ -225,20 +227,21 @@ class TestCardEffects {
         assertEquals(c4.returnCardName(), player2.returnPlayerHand()[player2.returnSlotWithCard()].returnCardName());
         player2.discardCard(c4);
         player2.addCard(Princess);
+        assertEquals("Princess", player2.returnPlayerHand()[player2.returnSlotWithCard()].returnCardName());
         assertFalse(player2.returnEliminated());
         ce.playHero();
         assertTrue(player2.returnEliminated());
     }
 
 
-     @Test
-     void testPlayWizard() {
+    @Test
+    void testPlayWizard() {
         hand1[0] = Hero;
         player1.addCard(Princess);
         player2.addCard(Hero);
         assertEquals(hand1[0], player2.returnPlayerHand()[0]);
         ce.playWizard();
-         assertEquals(hand1[0], player1.returnPlayerHand()[0]);
+        assertEquals(hand1[0], player1.returnPlayerHand()[0]);
 
 
     }
