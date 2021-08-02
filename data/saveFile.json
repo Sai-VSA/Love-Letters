@@ -1,12 +1,18 @@
 {
     "player1": {
         "playerTurn": true,
-        "drewCard": false,
+        "drewCard": true,
         "immune": false,
-        "playerHand": [{
-            "cardName": "Royal Subject",
-            "cardNumber": 2
-        }],
+        "playerHand": [
+            {
+                "cardName": "Guard",
+                "cardNumber": 1
+            },
+            {
+                "cardName": "Guard",
+                "cardNumber": 1
+            }
+        ],
         "name": "player1"
     },
     "player2": {
@@ -14,22 +20,23 @@
         "drewCard": false,
         "immune": false,
         "playerHand": [{
-            "cardName": "Lady",
-            "cardNumber": 7
+            "cardName": "Wizard",
+            "cardNumber": 6
         }],
         "name": "player2"
     },
     "deck": {
-        "discardPile": [],
+        "discardPile": [
+            {
+                "cardName": "Lady",
+                "cardNumber": 7
+            },
+            {
+                "cardName": "Guard",
+                "cardNumber": 1
+            }
+        ],
         "deck": [
-            {
-                "cardName": "Princess",
-                "cardNumber": 8
-            },
-            {
-                "cardName": "Royal Subject",
-                "cardNumber": 2
-            },
             {
                 "cardName": "Gossip",
                 "cardNumber": 3
@@ -39,24 +46,20 @@
                 "cardNumber": 1
             },
             {
+                "cardName": "Royal Subject",
+                "cardNumber": 2
+            },
+            {
+                "cardName": "Hero",
+                "cardNumber": 5
+            },
+            {
+                "cardName": "Princess",
+                "cardNumber": 8
+            },
+            {
                 "cardName": "Companion",
                 "cardNumber": 4
-            },
-            {
-                "cardName": "Guard",
-                "cardNumber": 1
-            },
-            {
-                "cardName": "Companion",
-                "cardNumber": 4
-            },
-            {
-                "cardName": "Guard",
-                "cardNumber": 1
-            },
-            {
-                "cardName": "Guard",
-                "cardNumber": 1
             },
             {
                 "cardName": "Hero",
@@ -69,18 +72,18 @@
                 "cardNumber": 3
             },
             {
-                "cardName": "Wizard",
-                "cardNumber": 6
+                "cardName": "Companion",
+                "cardNumber": 4
+            },
+            {
+                "cardName": "Royal Subject",
+                "cardNumber": 2
             },
             {
                 "cardName": "Guard",
                 "cardNumber": 1
-            },
-            {
-                "cardName": "Hero",
-                "cardNumber": 5
             }
         ]
     },
-    "gameState": {"gameState": 1}
+    "gameState": 1
 }

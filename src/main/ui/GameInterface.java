@@ -118,7 +118,7 @@ public class GameInterface {
                 a = 1;
             }
             lastPlayed = playingPlayer.returnPlayerHand()[a];
-            if (playingPlayer.returnPlayerHand()[a].returnCardName() == "Guard") {
+            if (playingPlayer.returnPlayerHand()[a].returnCardNumber() == 1) {
                 gameState = 4;
                 System.out.println("You played Guard.\nType ___ to guess: \nA -> RoyalSubject \nB -> Gossip \nC -> "
                         + "Companion \nD -> Hero \nE -> Wizard \nF -> Lady \nG -> Princess");
@@ -130,7 +130,7 @@ public class GameInterface {
             gameState = 1;
             displayGUI();
         } else {
-            System.out.println("Please choose a valid option, \n please try not adding spaces.");
+            System.out.println("Please choose a valid option, \ntry not adding spaces.");
         }
     }
 
@@ -140,16 +140,19 @@ public class GameInterface {
         ce = new CardEffects(deck, player1, player2);
         deck.discardCard(playingPlayer.discardCard(lastPlayed));
 
-        if ((turnState == 1 && (player2.returnImmune() == false))
-                || (turnState == 2 && (player1.returnImmune() == false))) {
-            System.out.println(ce.playGuard(c));
+        if (valid(c)) {
+            if (((turnState == 1) && (player2.returnImmune() == false))
+                    || ((turnState == 2) && (player1.returnImmune() == false))) {
+                System.out.println(ce.playGuard(c));
+            } else {
+                System.out.println("The chosen opponent was immune this turn.");
+            }
+
+            gameState = 1;
+            displayGUI();
         } else {
-            System.out.println("The chosen opponent was immune this turn.");
+            System.out.println("Please guess a valid card.");
         }
-
-
-        gameState = 1;
-        displayGUI();
     }
 
     // MODIFIES: this, deck, player
@@ -157,6 +160,8 @@ public class GameInterface {
     private void playCard(Card c) {
         ce = new CardEffects(deck, player1, player2);
         deck.discardCard(playingPlayer.discardCard(c));
+
+        displayGUI();
 
         if ((turnState == 1 && (player2.returnImmune() == true))
                 || (turnState == 2 && (player1.returnImmune() == true))) {
@@ -180,7 +185,6 @@ public class GameInterface {
 
 
         gameState = 1;
-        displayGUI();
     }
 
     // MODIFIES: this, player
@@ -435,7 +439,25 @@ public class GameInterface {
         }
         int discardSize = (16 - (deck.returnDeck().size() + 4 + player1.returnHandSize() + player2.returnHandSize()));
 
-        lastPlayed = deck.returnDiscardPile()[discardSize - 1];
+        if (discardSize >= 1) {
+            lastPlayed = deck.returnDiscardPile()[discardSize - 1];
+        }
+    }
+
+
+    // EFFECTS: Returns true if String c is a valid value for guard
+    public Boolean valid(String c) {
+        if (c.equalsIgnoreCase("A")
+                ||  c.equalsIgnoreCase("B")
+                ||  c.equalsIgnoreCase("C")
+                ||  c.equalsIgnoreCase("D")
+                ||  c.equalsIgnoreCase("E")
+                ||  c.equalsIgnoreCase("F")
+                ||  c.equalsIgnoreCase("G")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

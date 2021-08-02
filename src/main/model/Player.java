@@ -47,10 +47,16 @@ public class Player implements Runner {
      * EFFECTS: Removes inputted card from player hand
      */
     public Card discardCard(Card card) {
-        if (playerHand[0].returnCardName().equals(card.returnCardName())) {
-            playerHand[0] = null;
-        } else if (playerHand[1].returnCardName().equals(card.returnCardName())) {
-            playerHand[1] = null;
+        if (returnHandSize() == 2) {
+            if (playerHand[0].returnCardName().equals(card.returnCardName())) {
+                playerHand[0] = null;
+            } else if (playerHand[1].returnCardName().equals(card.returnCardName())) {
+                playerHand[1] = null;
+            }
+        } else {
+            if (playerHand[returnSlotWithCard()].returnCardName().equals(card.returnCardName())) {
+                playerHand[returnSlotWithCard()] = null;
+            }
         }
         return card;
     }
@@ -171,16 +177,16 @@ public class Player implements Runner {
         json.put("name", playerName);
 
         if (returnHandSize() == 2) {
-            c1.put("cardName",c[0].returnCardName());
-            c1.put("cardNumber",c[0].returnCardNumber());
-            c2.put("cardName",c[1].returnCardName());
-            c2.put("cardNumber",c[1].returnCardNumber());
+            c1.put("cardName", c[0].returnCardName());
+            c1.put("cardNumber", c[0].returnCardNumber());
+            c2.put("cardName", c[1].returnCardName());
+            c2.put("cardNumber", c[1].returnCardNumber());
 
             jsonArray.put(0, c1);
             jsonArray.put(1, c2);
         } else {
-            c1.put("cardName",c[returnSlotWithCard()].returnCardName());
-            c1.put("cardNumber",c[returnSlotWithCard()].returnCardNumber());
+            c1.put("cardName", c[returnSlotWithCard()].returnCardName());
+            c1.put("cardNumber", c[returnSlotWithCard()].returnCardNumber());
 
             jsonArray.put(0, c1);
         }

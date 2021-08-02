@@ -27,40 +27,40 @@ public class CardEffects {
     // MODIFIES: Player
     // EFFECTS: If guess is correct, eliminated guessed player
     public String playGuard(String s) {
-        String a = subGuard(s.toUpperCase());
+        int a = subGuard(s.toUpperCase());
+        Player b;
         if (player1.returnPlayerTurn() == true) {
             int cardLocation = player2.returnSlotWithCard();
-            if (player2.returnPlayerHand()[cardLocation].returnCardName().equalsIgnoreCase(a)) {
-                player2.setEliminated();
-                return "Your guess was correct!";
-            }
-            return "Your guess was incorrect";
+            b = player2;
         } else {
             int cardLocation = player1.returnSlotWithCard();
-            if (player1.returnPlayerHand()[cardLocation].returnCardName().equalsIgnoreCase(a)) {
-
-                player1.setEliminated();
-                return "Your guess was correct!";
-            }
+            b = player1;
+        }
+        int cardLocation = b.returnSlotWithCard();
+        if (b.returnPlayerHand()[cardLocation].returnCardNumber() == a) {
+            b.setEliminated();
+            return "Your guess was correct!";
+        } else {
             return "Your guess was incorrect";
         }
     }
 
-    public String subGuard(String a) {
-        if (a == "A") {
-            return "Royal Subject";
-        } else if (a == "B") {
-            return "Gossip";
-        } else if (a == "C") {
-            return "Companion";
-        } else if (a == "D") {
-            return "Hero";
-        } else if (a == "E") {
-            return "Wizard";
-        } else if (a == "F") {
-            return "Lady";
+
+    public int subGuard(String a) {
+        if (a.equalsIgnoreCase("A")) {
+            return 2;
+        } else if (a.equalsIgnoreCase("B")) {
+            return 3;
+        } else if (a.equalsIgnoreCase("C")) {
+            return 4;
+        } else if (a.equalsIgnoreCase("D")) {
+            return 5;
+        } else if (a.equalsIgnoreCase("E")) {
+            return 6;
+        } else if (a.equalsIgnoreCase("F")) {
+            return 7;
         } else {
-            return "Princess";
+            return 8;
         }
     }
 
@@ -70,13 +70,11 @@ public class CardEffects {
         if (player1.returnPlayerTurn() == true) {
             Player a = player2;
             Card c = a.returnPlayerHand()[a.returnSlotWithCard()];
-            return "Your opponents hand has: \n" + c.returnCardNumber() + " " + c.returnCardName() + "\n"
-                    + c.returnCardAbility();
+            return "Your opponents hand has: \n" + c.returnCardNumber() + ". " + c.returnCardName();
         } else {
             Player a = player1;
             Card c = a.returnPlayerHand()[a.returnSlotWithCard()];
-            return "Your opponents hand has: \n" + c.returnCardNumber() + " " + c.returnCardName() + "\n"
-                    + c.returnCardAbility();
+            return "Your opponents hand has: \n" + c.returnCardNumber() + ". " + c.returnCardName();
         }
     }
 
