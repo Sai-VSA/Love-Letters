@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import org.json.JSONString;
 import persistence.Runner;
 
+// Represents the player, player state and their hand
 public class Player implements Runner {
     private final String playerName;
     private Card[] playerHand;

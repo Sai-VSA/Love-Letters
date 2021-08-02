@@ -9,6 +9,7 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.Arrays;
 
+// Represents the shuffled deck, discarded cards and cards excluded from game
 public class Deck implements Runner {
     private Queue<Card> deck;
     private Card[] unshuffledDeck;

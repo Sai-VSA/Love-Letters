@@ -3,6 +3,7 @@ package model;
 
 import static java.lang.Character.toUpperCase;
 
+// Code for the card interactions in LoveLetters
 public class CardEffects {
     Deck deck;
     Player player1;

@@ -5,8 +5,7 @@ import model.*;
 import org.json.JSONObject;
 
 
-// Represents a writer that writes JSON representation of workroom to file
-
+// Represents a writer that writes JSON representation of the game state to file
 public class JsonWriter {
     // Large part of methods are based on JSonSerializationDemo. Link below:
     // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo

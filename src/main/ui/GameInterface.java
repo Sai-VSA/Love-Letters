@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 
+// Represents the LoveLetters game interface and user interactions
 public class GameInterface {
     private static final String JSON_STORE = "./data/saveFile.json";
     private Player player1;

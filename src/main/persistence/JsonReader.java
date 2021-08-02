@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 import org.json.*;
 
-
+// Represents a reader that reads Game information from JSON data stored in file
 public class JsonReader {
     // Large part of methods are based on JSonSerializationDemo. Link below:
     // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
