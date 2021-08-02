@@ -1,0 +1,85 @@
+{
+    "player1": {
+        "playerTurn": false,
+        "drewCard": false,
+        "immune": false,
+        "playerHand": [{
+            "cardName": "Guard",
+            "cardNumber": 1
+        }],
+        "name": "player1"
+    },
+    "player2": {
+        "playerTurn": false,
+        "drewCard": false,
+        "immune": false,
+        "playerHand": [{
+            "cardName": "Companion",
+            "cardNumber": 4
+        }],
+        "name": "player2"
+    },
+    "deck": {
+        "discardPile": [],
+        "deck": [
+            {
+                "cardName": "Wizard",
+                "cardNumber": 6
+            },
+            {
+                "cardName": "Companion",
+                "cardNumber": 4
+            },
+            {
+                "cardName": "Royal Subject",
+                "cardNumber": 2
+            },
+            {
+                "cardName": "Guard",
+                "cardNumber": 1
+            },
+            {
+                "cardName": "Guard",
+                "cardNumber": 1
+            },
+            {
+                "cardName": "Hero",
+                "cardNumber": 5
+            },
+            {
+                "cardName": "Princess",
+                "cardNumber": 8
+            },
+            {
+                "cardName": "Hero",
+                "cardNumber": 5
+            },
+            {
+                "cardName": "Lady",
+                "cardNumber": 7
+            },
+            {
+                "cardName": "Guard",
+                "cardNumber": 1
+            }
+        ],
+        "downCards": [
+            {
+                "cardName": "Royal Subject",
+                "cardNumber": 2
+            },
+            {
+                "cardName": "Gossip",
+                "cardNumber": 3
+            },
+            {
+                "cardName": "Guard",
+                "cardNumber": 1
+            },
+            {
+                "cardName": "Gossip",
+                "cardNumber": 3
+            }
+        ]
+    }
+}

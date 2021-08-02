@@ -1,11 +1,15 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Runner;
+
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 import java.util.Arrays;
 
-public class Deck {
+public class Deck implements Runner {
     private Queue<Card> deck;
     private Card[] unshuffledDeck;
     private Card[] discardPile;
@@ -191,5 +195,46 @@ public class Deck {
             this.empty = true;
         }
     }
-}
 
+    //REQUIRES: UI already run
+    //MODIFIES: data
+    //EFFECTS: Converts Deck information for JSON readibility
+    @Override
+    public JSONObject toJson() {
+        int num = 0;
+        JSONObject deckMain = new JSONObject();
+        JSONArray deckArray = new JSONArray();
+        JSONArray discardArray = new JSONArray();
+        JSONArray downArray = new JSONArray();
+
+        for (Card c : deck) {
+            JSONObject a = new JSONObject();
+            a.put("cardName",c.returnCardName());
+            a.put("cardNumber",c.returnCardNumber());
+            deckArray.put(num, a);
+            num++;
+        }
+
+        for (int i = 0; i < returnCardsInDiscard(); i++) {
+            JSONObject a = new JSONObject();
+            a.put("cardName",discardPile[i].returnCardName());
+            a.put("cardNumber",discardPile[i].returnCardNumber());
+            discardArray.put(i, a);
+        }
+
+        for (int i = 0; i < 4; i++) {
+            JSONObject a = new JSONObject();
+            a.put("cardName",downCards[i].returnCardName());
+            a.put("cardNumber",downCards[i].returnCardNumber());
+            downArray.put(i, a);
+        }
+
+        deckMain.put("deck", deckArray);
+        deckMain.put("discardPile", discardArray);
+        deckMain.put("downCards", downArray);
+
+        return deckMain;
+    }
+
+}
+///

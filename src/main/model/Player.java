@@ -1,8 +1,11 @@
 package model;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONString;
+import persistence.Runner;
 
-public class Player {
+public class Player implements Runner {
     private final String playerName;
     private Card[] playerHand;
     private boolean playerTurn;
@@ -155,7 +158,38 @@ public class Player {
     }
 
 
+    //REQUIRES: UI already run
+    //MODIFIES: data
+    //EFFECTS: Converts Player information for JSON readibility
+    @Override
+    public JSONObject toJson() {
+        Card[] c = returnPlayerHand();
+        JSONObject json = new JSONObject();
+        JSONObject c1 = new JSONObject();
+        JSONObject c2 = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        json.put("name", playerName);
 
+        if (returnHandSize() == 2) {
+            c1.put("cardName",c[0].returnCardName());
+            c1.put("cardNumber",c[0].returnCardNumber());
+            c2.put("cardName",c[1].returnCardName());
+            c2.put("cardNumber",c[1].returnCardNumber());
+
+            jsonArray.put(0, c1);
+            jsonArray.put(1, c2);
+        } else {
+            c1.put("cardName",c[returnSlotWithCard()].returnCardName());
+            c1.put("cardNumber",c[returnSlotWithCard()].returnCardNumber());
+
+            jsonArray.put(0, c1);
+        }
+        json.put("playerHand", jsonArray);
+        json.put("playerTurn", playerTurn);
+        json.put("drewCard", drewCard);
+        json.put("immune", immune);
+        return json;
+    }
 }
 
 

@@ -11,8 +11,7 @@
       }],
     "playerTurn": true,
     "drewCard": true,
-    "immune": false,
-    "eliminated": false
+    "immune": false
     },
 
   "player2": {
@@ -23,8 +22,7 @@
     }],
     "playerTurn": false,
     "drewCard": false,
-    "immune": true,
-    "eliminated": false
+    "immune": true
   },
 
   "deck": {
