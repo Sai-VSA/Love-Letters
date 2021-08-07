@@ -1,72 +1,74 @@
 {
     "player1": {
-        "playerTurn": true,
-        "drewCard": true,
-        "immune": false,
-        "playerHand": [
-            {
-                "cardName": "Guard",
-                "cardNumber": 1
-            },
-            {
-                "cardName": "Guard",
-                "cardNumber": 1
-            }
-        ],
-        "name": "player1"
-    },
-    "player2": {
         "playerTurn": false,
         "drewCard": false,
         "immune": false,
         "playerHand": [{
-            "cardName": "Wizard",
-            "cardNumber": 6
+            "cardName": "Gossip",
+            "cardNumber": 3
+        }],
+        "name": "player1"
+    },
+    "player2": {
+        "playerTurn": true,
+        "drewCard": true,
+        "immune": false,
+        "playerHand": [{
+            "cardName": "Hero",
+            "cardNumber": 5
         }],
         "name": "player2"
     },
     "deck": {
         "discardPile": [
             {
-                "cardName": "Lady",
-                "cardNumber": 7
+                "cardName": "Royal Subject",
+                "cardNumber": 2
             },
             {
-                "cardName": "Guard",
-                "cardNumber": 1
+                "cardName": "Lady",
+                "cardNumber": 7
             }
         ],
         "deck": [
             {
-                "cardName": "Gossip",
-                "cardNumber": 3
-            },
-            {
-                "cardName": "Guard",
-                "cardNumber": 1
-            },
-            {
                 "cardName": "Royal Subject",
                 "cardNumber": 2
             },
             {
                 "cardName": "Hero",
                 "cardNumber": 5
+            },
+            {
+                "cardName": "Wizard",
+                "cardNumber": 6
+            },
+            {
+                "cardName": "Guard",
+                "cardNumber": 1
+            },
+            {
+                "cardName": "Guard",
+                "cardNumber": 1
+            },
+            {
+                "cardName": "Guard",
+                "cardNumber": 1
+            },
+            {
+                "cardName": "Guard",
+                "cardNumber": 1
             },
             {
                 "cardName": "Princess",
                 "cardNumber": 8
-            },
-            {
-                "cardName": "Companion",
-                "cardNumber": 4
-            },
-            {
-                "cardName": "Hero",
-                "cardNumber": 5
             }
         ],
         "downCards": [
+            {
+                "cardName": "Guard",
+                "cardNumber": 1
+            },
             {
                 "cardName": "Gossip",
                 "cardNumber": 3
@@ -76,12 +78,8 @@
                 "cardNumber": 4
             },
             {
-                "cardName": "Royal Subject",
-                "cardNumber": 2
-            },
-            {
-                "cardName": "Guard",
-                "cardNumber": 1
+                "cardName": "Companion",
+                "cardNumber": 4
             }
         ]
     },

@@ -8,8 +8,13 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
 // Represents the LoveLetters game interface and user interactions
-public class GameInterface {
+public class GameInterface implements ActionListener {
     private static final String JSON_STORE = "./data/saveFile.json";
     private Player player1;
     private Player player2;
@@ -22,6 +27,11 @@ public class GameInterface {
     private Card lastPlayed;
     private JsonReader jsonReader;
     private JsonWriter jsonWriter;
+
+    private JFrame frame;
+    private JMenuBar menuBar;
+    private JMenu saveMenu;
+    private JMenu loadMenu;
 
     /* EFFECT: starts game
      */
@@ -79,6 +89,7 @@ public class GameInterface {
         gameState = 0;
         jsonReader = new JsonReader(JSON_STORE);
         jsonWriter = new JsonWriter(JSON_STORE);
+        startGui();
     }
 
     // MODIFIES: this
@@ -449,15 +460,59 @@ public class GameInterface {
     // EFFECTS: Returns true if String c is a valid value for guard
     public Boolean valid(String c) {
         if (c.equalsIgnoreCase("A")
-                ||  c.equalsIgnoreCase("B")
-                ||  c.equalsIgnoreCase("C")
-                ||  c.equalsIgnoreCase("D")
-                ||  c.equalsIgnoreCase("E")
-                ||  c.equalsIgnoreCase("F")
-                ||  c.equalsIgnoreCase("G")) {
+                || c.equalsIgnoreCase("B")
+                || c.equalsIgnoreCase("C")
+                || c.equalsIgnoreCase("D")
+                || c.equalsIgnoreCase("E")
+                || c.equalsIgnoreCase("F")
+                || c.equalsIgnoreCase("G")) {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public void startGui() {
+        makeMenu();
+    }
+
+
+    public void makeFrame() {
+        frame = new JFrame();
+        frame.setTitle("Love Letters Virtual");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(800, 800);
+        frame.setResizable(false);
+        frame.setLayout(new FlowLayout());
+        frame.setVisible(true);
+        frame.getContentPane().setBackground(new Color(30, 10, 0));
+
+        ImageIcon frameLogo = new ImageIcon("src/img_1.png");
+        frame.setIconImage(frameLogo.getImage());
+    }
+
+    public void makeMenu() {
+        makeFrame();
+        menuBar = new JMenuBar();
+        saveMenu = new JMenu("Save");
+        loadMenu = new JMenu("Load");
+
+        menuBar.add(saveMenu);
+        menuBar.add(loadMenu);
+
+        frame.setJMenuBar(menuBar);
+        saveMenu.addActionListener(this);
+        loadMenu.addActionListener(this);
+
+    }
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == saveMenu) {
+            saveState();
+        } else if (e.getSource() == loadMenu) {
+            loadState();
         }
     }
 
