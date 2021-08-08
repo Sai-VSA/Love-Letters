@@ -1,11 +1,11 @@
 {
     "player1": {
         "playerTurn": true,
-        "drewCard": false,
+        "drewCard": true,
         "immune": false,
         "playerHand": [{
-            "cardName": "Hero",
-            "cardNumber": 5
+            "cardName": "Guard",
+            "cardNumber": 1
         }],
         "name": "player1"
     },
@@ -14,22 +14,23 @@
         "drewCard": false,
         "immune": false,
         "playerHand": [{
-            "cardName": "Guard",
-            "cardNumber": 1
+            "cardName": "Hero",
+            "cardNumber": 5
         }],
         "name": "player2"
     },
     "deck": {
-        "discardPile": [],
-        "deck": [
-            {
-                "cardName": "Guard",
-                "cardNumber": 1
-            },
+        "discardPile": [
             {
                 "cardName": "Hero",
                 "cardNumber": 5
             },
+            {
+                "cardName": "Guard",
+                "cardNumber": 1
+            }
+        ],
+        "deck": [
             {
                 "cardName": "Princess",
                 "cardNumber": 8

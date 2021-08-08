@@ -18,7 +18,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 // Represents the LoveLetters game interface and user interactions
-public class GameInterface implements ActionListener {
+public class GameInterface extends JPanel implements ActionListener {
     private static final String JSON_STORE = "./data/saveFile.json";
     private Player player1;
     private Player player2;
@@ -38,6 +38,12 @@ public class GameInterface implements ActionListener {
     private JMenuItem save;
     private JMenuItem load;
     private ImageIcon image;
+
+    private int width;
+    private int height;
+    Point imageCorner;
+    Point prevPt;
+
 
     /* EFFECT: starts game
      */
@@ -484,6 +490,7 @@ public class GameInterface implements ActionListener {
     public void startGui() {
         makeFrame();
         makeMenu();
+        //frame.add();
     }
 
     // MODIFIES: This
@@ -545,6 +552,42 @@ public class GameInterface implements ActionListener {
             image = new ImageIcon("src/Princess.png");
         }
         return image;
+    }
+
+    public void dragAndDrop() {
+        image = new ImageIcon("src/Hero.png");
+        width = image.getIconWidth();
+        height = image.getIconHeight();
+
+        imageCorner = new Point(0, 0);
+        ClickListener clickListener = new ClickListener();
+        DragListener dragListener = new DragListener();
+        frame.addMouseListener(clickListener);
+        frame.addMouseMotionListener(dragListener);
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        image.paintIcon(frame, g, (int)imageCorner.getX(), (int)imageCorner.getY());
+
+    }
+
+    private class ClickListener extends MouseAdapter {
+        public void mousePressed(MouseEvent e) {
+            prevPt = e.getPoint();
+        }
+
+    }
+
+    private class DragListener extends MouseMotionAdapter {
+        public void mouseDragged(MouseEvent e) {
+            Point currentPt = e.getPoint();
+
+            imageCorner.translate(currentPt.x - prevPt.x,currentPt.y - prevPt.y);
+            prevPt = currentPt;
+            frame.repaint();
+        }
+
     }
 
     // EFFECTS: Creates actions for menu values

@@ -1,52 +1,72 @@
 package ui;
 
-import model.*;
-import ui.*;
-
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import java.awt.event.*;
 import javax.swing.*;
 
-public class DragAndDrop extends JPanel {
-    private JFrame frame;
+public class DragAndDrop extends JPanel implements ActionListener {
     private ImageIcon image;
     private int width;
     private int height;
     Point imageCorner;
     Point prevPt;
+    JButton buttonNext;
+    JButton buttonBefore;
 
     public DragAndDrop() {
-        makeFrame();
         image = new ImageIcon("src/Hero.png");
+        Image image1 = image.getImage();
+        Image image2 = image1.getScaledInstance(300, 420, Image.SCALE_SMOOTH);
+        image = new ImageIcon(image2);
+
         width = image.getIconWidth();
         height = image.getIconHeight();
 
-        imageCorner = new Point(0, 0);
+        imageCorner = new Point(220, 180);
         ClickListener clickListener = new ClickListener();
         DragListener dragListener = new DragListener();
-        frame.addMouseListener(clickListener);
-        frame.addMouseMotionListener(dragListener);
+        this.addMouseListener(clickListener);
+        this.addMouseMotionListener(dragListener);
+
+        buttonNext = new JButton();
+        buttonNext.setPreferredSize(new Dimension(200, 40));
+        buttonNext.addActionListener(this);
+        buttonNext.setText("Next");
+        buttonNext.setEnabled(true);
+
+        buttonBefore = new JButton();
+        buttonBefore.setPreferredSize(new Dimension(200, 40));
+        buttonBefore.addActionListener(this);
+        buttonBefore.setText("Before");
+        buttonBefore.setEnabled(true);
+
+        this.add(buttonBefore, BorderLayout.WEST);
+        this.add(buttonNext, BorderLayout.EAST);
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        image.paintIcon(frame, g, (int)imageCorner.getX(), (int)imageCorner.getY());
+        image.paintIcon(this, g, (int)imageCorner.getX(), (int)imageCorner.getY());
 
     }
 
-    public void makeFrame() {
-        frame = new JFrame();
-        frame.setTitle("Love Letters Virtual");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(500, 500);
-        frame.setResizable(true);
-        frame.setLayout(null);
-        frame.getContentPane().setBackground(new Color(222, 184, 135));
-
-        ImageIcon frameLogo = new ImageIcon("src/img_1.png");
-        frame.setIconImage(frameLogo.getImage());
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        //if ( !(num == (returnCardsInDiscard - 1)))
+        // ButtonNext.setEnabled(false);
+        if (e.getSource() == buttonNext) {
+            image = new ImageIcon("src/Princess.png");
+            Image image1 = image.getImage();
+            Image image2 = image1.getScaledInstance(300, 420, Image.SCALE_SMOOTH);
+            image = new ImageIcon(image2);
+            repaint();
+        } else if (e.getSource() == buttonBefore) {
+            image = new ImageIcon("src/Hero.png");
+            Image image1 = image.getImage();
+            Image image2 = image1.getScaledInstance(300, 420, Image.SCALE_SMOOTH);
+            image = new ImageIcon(image2);
+            repaint();
+        }
     }
 
 
@@ -63,7 +83,7 @@ public class DragAndDrop extends JPanel {
 
             imageCorner.translate(currentPt.x - prevPt.x,currentPt.y - prevPt.y);
             prevPt = currentPt;
-            frame.repaint();
+            repaint();
         }
 
     }
