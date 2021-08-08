@@ -9,6 +9,7 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -30,8 +31,10 @@ public class GameInterface implements ActionListener {
 
     private JFrame frame;
     private JMenuBar menuBar;
-    private JMenu saveMenu;
-    private JMenu loadMenu;
+    private JMenu file;
+    private JMenuItem save;
+    private JMenuItem load;
+
 
     /* EFFECT: starts game
      */
@@ -416,7 +419,7 @@ public class GameInterface implements ActionListener {
             jsonWriter.open();
             jsonWriter.writeFile(player1, player2, deck);
             jsonWriter.close();
-            System.out.println("Saved Successfully.");
+            JOptionPane.showMessageDialog(null, "Save Successful!");
         } catch (FileNotFoundException e) {
             System.out.println("File destination not present.");
         }
@@ -432,11 +435,12 @@ public class GameInterface implements ActionListener {
             gameState = jsonReader.readGameState();
             deck.reloadDeck(jsonReader.readDeck(), jsonReader.readDiscard(), jsonReader.readDown());
             loadBoard();
-            System.out.println("Save successfully loaded.");
+            displayGUI();
+            JOptionPane.showMessageDialog(null, "Load Successful!");
         } catch (IOException e) {
             System.out.println("Unable to read from " + JSON_STORE);
+            displayGUI();
         }
-        displayGUI();
     }
 
     // MODIFIES: this
@@ -472,51 +476,84 @@ public class GameInterface implements ActionListener {
         }
     }
 
+    // MODIFIES: This
+    // EFFECTS: Initializes Frame and Menu values
     public void startGui() {
+        makeFrame();
         makeMenu();
     }
 
-
+    // MODIFIES: This
+    // EFFECTS: Initializes Frame values
     public void makeFrame() {
         frame = new JFrame();
         frame.setTitle("Love Letters Virtual");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(800, 800);
-        frame.setResizable(false);
-        frame.setLayout(new FlowLayout());
-        frame.setVisible(true);
-        frame.getContentPane().setBackground(new Color(30, 10, 0));
+        frame.setSize(500, 500);
+        frame.setResizable(true);
+        frame.setLayout(null);
+        frame.getContentPane().setBackground(new Color(222, 184, 135));
 
         ImageIcon frameLogo = new ImageIcon("src/img_1.png");
         frame.setIconImage(frameLogo.getImage());
     }
 
+    // REQUIRES: makeFrame called prior
+    // MODIFIES: This
+    // EFFECTS: Initializes Menu values
     public void makeMenu() {
-        makeFrame();
         menuBar = new JMenuBar();
-        saveMenu = new JMenu("Save");
-        loadMenu = new JMenu("Load");
+        file = new JMenu("File");
+        save = new JMenuItem("Save");
+        load = new JMenuItem("Load");
 
-        menuBar.add(saveMenu);
-        menuBar.add(loadMenu);
-
+        file.add(save);
+        file.add(load);
+        menuBar.add(file);
         frame.setJMenuBar(menuBar);
-        saveMenu.addActionListener(this);
-        loadMenu.addActionListener(this);
+        menuBar.setVisible(true);
 
+        save.addActionListener(this);
+        load.addActionListener(this);
+        frame.setVisible(true);
     }
 
 
+    // EFFECTS: Consumes a Card and returns image of Card
+    public ImageIcon cardToImage(Card card) {
+        ImageIcon image;
+        if (card.returnCardName().equals("Guard")) {
+            image = new ImageIcon("src/Guard.png");
+        } else if (card.returnCardName().equals("Royal Subject")) {
+            image = new ImageIcon("src/RoyalSubject.png");
+        } else if (card.returnCardName().equals("Gossip")) {
+            image = new ImageIcon("src/Gossip.png");
+        } else if (card.returnCardName().equals("Companion")) {
+            image = new ImageIcon("src/Companion.png");
+        } else if (card.returnCardName().equals("Hero")) {
+            image = new ImageIcon("src/Hero.png");
+        } else if (card.returnCardName().equals("Wizard")) {
+            image = new ImageIcon("src/Wizard.png");
+        } else if (card.returnCardName().equals("Lady")) {
+            image = new ImageIcon("src/Lady.png");
+        } else {
+            image = new ImageIcon("src/Princess.png");
+        }
+        return image;
+    }
+
+    // EFFECTS: Creates actions for menu values
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == saveMenu) {
+
+        if (e.getSource() == save) {
             saveState();
-        } else if (e.getSource() == loadMenu) {
+
+        } else if (e.getSource() == load) {
             loadState();
         }
+
     }
-
-
 }
 
 
