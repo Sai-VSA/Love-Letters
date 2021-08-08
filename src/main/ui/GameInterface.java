@@ -1,15 +1,18 @@
 package ui;
 
+import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
-import java.io.IOException;
+import java.awt.dnd.DragGestureEvent;
+import java.awt.dnd.DragSource;
+import java.io.*;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 
 
-import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -34,7 +37,7 @@ public class GameInterface implements ActionListener {
     private JMenu file;
     private JMenuItem save;
     private JMenuItem load;
-
+    private ImageIcon image;
 
     /* EFFECT: starts game
      */
@@ -516,7 +519,9 @@ public class GameInterface implements ActionListener {
         save.addActionListener(this);
         load.addActionListener(this);
         frame.setVisible(true);
+
     }
+
 
 
     // EFFECTS: Consumes a Card and returns image of Card
