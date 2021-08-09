@@ -3,7 +3,6 @@ package ui;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-import java.io.IOException;
 import javax.sound.sampled.*;
 import javax.swing.*;
 
@@ -26,7 +25,7 @@ public class DragAndDrop extends JPanel implements ActionListener {
     File pickCard = new File("data/cardPick.wav");
     Clip clip;
 
-    //REQUIRES: Discards not Empty
+
     //EFFECTS: Initializes DragAndDrop
     public DragAndDrop(Card[] discard, int num) {
         discards = discard;
@@ -73,7 +72,8 @@ public class DragAndDrop extends JPanel implements ActionListener {
         this.add(buttonNext);
     }
 
-    //EFFECTS: Paints over background where Card is dragged
+    //MODIFIES: this
+    //EFFECTS: Sets and paints over background where Card is dragged
     public void paintComponent(Graphics g) {
      // Table image from
      //https://st3.depositphotos.com/12985656/15711/i/600/depositphotos_157114568-stock-photo-top-view-of-old-shabby.jpg
@@ -86,7 +86,6 @@ public class DragAndDrop extends JPanel implements ActionListener {
         currentImage.paintIcon(this, g, (int) imageCorner.getX(), (int) imageCorner.getY());
     }
 
-    //REQUIRES: Discard is not empty
     //MODIFIES: this
     //EFFECTS: Changes Card to previous or next Discard
     @Override

@@ -1,21 +1,13 @@
 package ui;
 
-import javafx.scene.Node;
-import javafx.scene.layout.Pane;
 import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
-import java.awt.dnd.DragGestureEvent;
-import java.awt.dnd.DragSource;
 import java.io.*;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -40,7 +32,6 @@ public class GameInterface extends JPanel implements ActionListener {
     private JMenu file;
     private JMenuItem save;
     private JMenuItem load;
-    DragAndDrop drag;
 
 
     /* EFFECT: starts game
@@ -516,7 +507,7 @@ public class GameInterface extends JPanel implements ActionListener {
 
     // REQUIRES: makeFrame called prior
     // MODIFIES: This
-    // EFFECTS: Initializes Menu values
+    // EFFECTS: Creates cards from discardPile and related operations
     public void makeDiscards() {
         DragAndDrop drag = new DragAndDrop(deck.returnDiscardPile(), (deck.returnCardsInDiscard() - 1));
         frame.add(drag);
@@ -545,6 +536,7 @@ public class GameInterface extends JPanel implements ActionListener {
     }
 
 
+    // MODIFIES: this
     // EFFECTS: Creates actions for menu values
     @Override
     public void actionPerformed(ActionEvent e) {
