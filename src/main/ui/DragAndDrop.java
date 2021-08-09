@@ -5,8 +5,11 @@ import java.awt.event.*;
 import java.io.File;
 import javax.sound.sampled.*;
 import javax.swing.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import model.*;
+
 
 // Allows the dragging, dropping and looking through of discarded cards
 public class DragAndDrop extends JPanel implements ActionListener {
@@ -20,6 +23,7 @@ public class DragAndDrop extends JPanel implements ActionListener {
     Point prevPt;
     JButton buttonPrevious;
     JButton buttonNext;
+    JButton buttonTop;
     File clickSound = new File("data/mouseClick.wav");
     File cardSlide = new File("data/CardSlide.wav");
     File pickCard = new File("data/cardPick.wav");
@@ -68,8 +72,36 @@ public class DragAndDrop extends JPanel implements ActionListener {
         buttonNext.addActionListener(this);
         buttonNext.setText("Next Discard");
 
+        buttonTop = new JButton();
+        buttonTop.setPreferredSize(new Dimension(200, 40));
+        buttonTop.addActionListener(this);
+        buttonTop.setText("Return to Top");
+
         this.add(buttonPrevious);
         this.add(buttonNext);
+        this.add(buttonTop);
+        buttonConditions();
+    }
+
+    //REQUIRES: Buttons already set
+    //MODIFIES: this
+    //EFFECTS: Enables or disabled buttons based on conditions
+    public void buttonConditions() {
+        if ((num1 - 1) < 0) {
+            buttonPrevious.setEnabled(false);
+        } else {
+            buttonPrevious.setEnabled(true);
+        }
+        if ((num1 + 1) > maxArrayNum) {
+            buttonNext.setEnabled(false);
+        } else {
+            buttonNext.setEnabled(true);
+        }
+        if (num1 == maxArrayNum) {
+            buttonTop.setEnabled(false);
+        } else {
+            buttonTop.setEnabled(true);
+        }
     }
 
     //MODIFIES: this
@@ -98,23 +130,16 @@ public class DragAndDrop extends JPanel implements ActionListener {
             playFile(clickSound);
             num1 = num1 - 1;
             imageSetter(cardToImage(discards[num1]));
-
-
         } else if (e.getSource() == buttonNext) {
             num1 = num1 + 1;
             imageSetter(cardToImage(discards[num1]));
             playFile(clickSound);
+        } else if (e.getSource() == buttonTop) {
+            num1 = maxArrayNum;
+            imageSetter(cardToImage(discards[num1]));
+            playFile(clickSound);
         }
-        if ((num1 - 1) < 0) {
-            buttonPrevious.setEnabled(false);
-        } else {
-            buttonPrevious.setEnabled(true);
-        }
-        if ((num1 + 1) > maxArrayNum) {
-            buttonNext.setEnabled(false);
-        } else {
-            buttonNext.setEnabled(true);
-        }
+        buttonConditions();
     }
 
     //EFFECTS: Plays inputted file
