@@ -164,6 +164,7 @@ public class GameInterface extends JPanel implements ActionListener {
 
             gameState = 1;
             displayGUI();
+            startGui();
         } else {
             System.out.println("Please guess a valid card.");
         }
