@@ -84,6 +84,9 @@ public class DragAndDrop extends JPanel implements ActionListener {
         super.paintComponent(g);
         g.drawImage(bg.getImage(), 0, 0, null);
         currentImage.paintIcon(this, g, (int) imageCorner.getX(), (int) imageCorner.getY());
+        g.setFont(g.getFont().deriveFont(20.0F));
+        g.setColor(Color.white);
+        g.drawString("Discard Pile", 30, 35);
     }
 
     //MODIFIES: this
@@ -149,7 +152,9 @@ public class DragAndDrop extends JPanel implements ActionListener {
         }
 
         public void mouseReleased(MouseEvent e) {
-            clip.close();
+            if (!(clip == null) && (clip.isOpen())) {
+                clip.close();
+            }
         }
     }
 
@@ -163,7 +168,7 @@ public class DragAndDrop extends JPanel implements ActionListener {
             imageCorner.translate(currentPt.x - prevPt.x, currentPt.y - prevPt.y);
             prevPt = currentPt;
             repaint();
-            if ((clip == null) || !(clip.isOpen())) {
+            if ((clip == null) || !(clip.isOpen()) || (!clip.isActive())) {
                 try {
                     AudioInputStream audioStream = AudioSystem.getAudioInputStream(cardSlide);
                     clip = AudioSystem.getClip();
