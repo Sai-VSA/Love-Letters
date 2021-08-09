@@ -22,6 +22,9 @@ public class DragAndDrop extends JPanel implements ActionListener {
     JButton buttonPrevious;
     JButton buttonNext;
     File clickSound = new File("data/mouseClick.wav");
+    File cardSlide = new File("data/CardSlide.wav");
+    File pickCard = new File("data/cardPick.wav");
+    Clip clip;
 
     //REQUIRES: Discards not Empty
     //EFFECTS: Initializes DragAndDrop
@@ -115,7 +118,7 @@ public class DragAndDrop extends JPanel implements ActionListener {
     //EFFECTS: Plays inputted file
     public void playFile(File file) {
         try {
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(clickSound);
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
             Clip clip = AudioSystem.getClip();
             clip.open(audioStream);
             clip.start();
@@ -124,6 +127,7 @@ public class DragAndDrop extends JPanel implements ActionListener {
         }
     }
 
+    //MODIFIES: this
     //EFFECTS: Sets image attributes to Card height and length
     public void imageSetter(ImageIcon i) {
         currentImage = i;
@@ -142,12 +146,17 @@ public class DragAndDrop extends JPanel implements ActionListener {
     private class ClickListener extends MouseAdapter {
         public void mousePressed(MouseEvent e) {
             prevPt = e.getPoint();
+            playFile(pickCard);
         }
 
+        public void mouseReleased(MouseEvent e) {
+            clip.close();
+        }
     }
 
+
     //MODIFIES: this
-    //EFFECTS: Checks for mouse movement
+    //EFFECTS: Checks for mouse movement and drags card
     private class DragListener extends MouseMotionAdapter {
         public void mouseDragged(MouseEvent e) {
             Point currentPt = e.getPoint();
@@ -155,6 +164,16 @@ public class DragAndDrop extends JPanel implements ActionListener {
             imageCorner.translate(currentPt.x - prevPt.x, currentPt.y - prevPt.y);
             prevPt = currentPt;
             repaint();
+            if ((clip == null) || !(clip.isOpen())) {
+                try {
+                    AudioInputStream audioStream = AudioSystem.getAudioInputStream(cardSlide);
+                    clip = AudioSystem.getClip();
+                    clip.open(audioStream);
+                    clip.start();
+                } catch (Exception a) {
+                    //
+                }
+            }
         }
 
     }
