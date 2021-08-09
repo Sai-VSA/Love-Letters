@@ -499,15 +499,14 @@ public class GameInterface extends JPanel implements ActionListener {
         frame = new JFrame();
         frame.setTitle("Love Letters Virtual");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(800, 800);
-        //frame.getContentPane().setBackground(new Color(222, 184, 135));
+        frame.setSize(1000, 800);
         makeDiscards();
         frame.setVisible(true);
-        frame.setResizable(true);
+        frame.setResizable(false);
         frame.setLayout(new GridLayout());
 
 
-        ImageIcon frameLogo = new ImageIcon("src/img_1.png");
+        ImageIcon frameLogo = new ImageIcon("data/Images/img_1.png");
         frame.setIconImage(frameLogo.getImage());
     }
 

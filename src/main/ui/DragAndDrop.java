@@ -2,6 +2,9 @@ package ui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
+import javax.sound.sampled.*;
 import javax.swing.*;
 
 import model.*;
@@ -16,20 +19,21 @@ public class DragAndDrop extends JPanel implements ActionListener {
     private int num1;
     Point imageCorner;
     Point prevPt;
+    JButton buttonPrevious;
     JButton buttonNext;
-    JButton buttonBefore;
+    File clickSound = new File("data/mouseClick.wav");
 
     //REQUIRES: Discards not Empty
     //EFFECTS: Initializes DragAndDrop
     public DragAndDrop(Card[] discard, int num) {
-        this.setBackground(Color.BLACK);
         discards = discard;
         maxArrayNum = num;
+        num1 = num;
 
         if (num >= 0) {
-            imageSetter(cardToImage(discards[0]));
+            imageSetter(cardToImage(discards[num1]));
         } else {
-            ImageIcon im = new ImageIcon("src/EmptyDiscard.png");
+            ImageIcon im = new ImageIcon("data/Images/EmptyDiscard.png");
             imageSetter(im);
         }
 
@@ -41,36 +45,42 @@ public class DragAndDrop extends JPanel implements ActionListener {
         setButtons();
 
         if ((num1 - 1) < 0) {
-            buttonNext.setEnabled(false);
+            buttonPrevious.setEnabled(false);
         }
 
         if ((num1 + 1) > maxArrayNum) {
-            buttonBefore.setEnabled(false);
+            buttonNext.setEnabled(false);
         }
     }
 
     //MODIFIES: this
     //EFFECTS: Creates buttons for next and previous cards
     public void setButtons() {
+        buttonPrevious = new JButton();
+        buttonPrevious.setPreferredSize(new Dimension(200, 40));
+        buttonPrevious.addActionListener(this);
+        buttonPrevious.setText("Previous Discard");
+
         buttonNext = new JButton();
         buttonNext.setPreferredSize(new Dimension(200, 40));
         buttonNext.addActionListener(this);
         buttonNext.setText("Next Discard");
 
-        buttonBefore = new JButton();
-        buttonBefore.setPreferredSize(new Dimension(200, 40));
-        buttonBefore.addActionListener(this);
-        buttonBefore.setText("Previous Discard");
-
-        this.add(buttonBefore);
+        this.add(buttonPrevious);
         this.add(buttonNext);
     }
 
     //EFFECTS: Paints over background where Card is dragged
     public void paintComponent(Graphics g) {
+     // Table image from
+     //https://st3.depositphotos.com/12985656/15711/i/600/depositphotos_157114568-stock-photo-top-view-of-old-shabby.jpg
+        ImageIcon bg = new ImageIcon("data/Images/Table.png");
+        Image image1 = bg.getImage();
+        Image image2 = image1.getScaledInstance(1600, 800, Image.SCALE_SMOOTH);
+        bg = new ImageIcon(image2);
         super.paintComponent(g);
+        g.drawImage(bg.getImage(), 0, 0, null);
         currentImage.paintIcon(this, g, (int) imageCorner.getX(), (int) imageCorner.getY());
-
     }
 
     //REQUIRES: Discard is not empty
@@ -79,24 +89,38 @@ public class DragAndDrop extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource() == buttonNext) {
+        if (e.getSource() == buttonPrevious) {
+            playFile(clickSound);
             num1 = num1 - 1;
             imageSetter(cardToImage(discards[num1]));
 
-        } else if (e.getSource() == buttonBefore) {
+
+        } else if (e.getSource() == buttonNext) {
             num1 = num1 + 1;
             imageSetter(cardToImage(discards[num1]));
-
+            playFile(clickSound);
         }
         if ((num1 - 1) < 0) {
+            buttonPrevious.setEnabled(false);
+        } else {
+            buttonPrevious.setEnabled(true);
+        }
+        if ((num1 + 1) > maxArrayNum) {
             buttonNext.setEnabled(false);
         } else {
             buttonNext.setEnabled(true);
         }
-        if ((num1 + 1) > maxArrayNum) {
-            buttonBefore.setEnabled(false);
-        } else {
-            buttonBefore.setEnabled(true);
+    }
+
+    //EFFECTS: Plays inputted file
+    public void playFile(File file) {
+        try {
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(clickSound);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+            clip.start();
+        } catch (Exception a) {
+            //
         }
     }
 
@@ -139,21 +163,21 @@ public class DragAndDrop extends JPanel implements ActionListener {
     public ImageIcon cardToImage(Card card) {
         ImageIcon image;
         if (card.returnCardName().equals("Guard")) {
-            image = new ImageIcon("src/Guard.png");
+            image = new ImageIcon("data/Images/Guard.png");
         } else if (card.returnCardName().equals("Royal Subject")) {
-            image = new ImageIcon("src/RoyalSubject.png");
+            image = new ImageIcon("data/Images/RoyalSubject.png");
         } else if (card.returnCardName().equals("Gossip")) {
-            image = new ImageIcon("src/Gossip.png");
+            image = new ImageIcon("data/Images/Gossip.png");
         } else if (card.returnCardName().equals("Companion")) {
-            image = new ImageIcon("src/Companion.png");
+            image = new ImageIcon("data/Images/Companion.png");
         } else if (card.returnCardName().equals("Hero")) {
-            image = new ImageIcon("src/Hero.png");
+            image = new ImageIcon("data/Images/Hero.png");
         } else if (card.returnCardName().equals("Wizard")) {
-            image = new ImageIcon("src/Wizard.png");
+            image = new ImageIcon("data/Images/Wizard.png");
         } else if (card.returnCardName().equals("Lady")) {
-            image = new ImageIcon("src/Lady.png");
+            image = new ImageIcon("data/Images/Lady.png");
         } else {
-            image = new ImageIcon("src/Princess.png");
+            image = new ImageIcon("data/Images/Princess.png");
         }
         return image;
     }
