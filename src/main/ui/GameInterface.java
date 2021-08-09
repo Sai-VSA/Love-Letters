@@ -37,13 +37,7 @@ public class GameInterface extends JPanel implements ActionListener {
     private JMenu file;
     private JMenuItem save;
     private JMenuItem load;
-    private ImageIcon image;
-
-    private int width;
-    private int height;
-    Point imageCorner;
-    Point prevPt;
-
+    DragAndDrop drag;
 
     /* EFFECT: starts game
      */
@@ -120,6 +114,7 @@ public class GameInterface extends JPanel implements ActionListener {
             printPlayerHand(playingPlayer);
         } else if (command.equals("d")) {
             printDiscardPile();
+            startGui();
         } else if (command.equals("e")) {
             nextTurn();
         } else if (command.equals("f")) {
@@ -207,8 +202,7 @@ public class GameInterface extends JPanel implements ActionListener {
             }
         }
 
-
-        gameState = 1;
+        startGui();
     }
 
     // MODIFIES: this, player
@@ -390,6 +384,7 @@ public class GameInterface extends JPanel implements ActionListener {
         System.out.println("Press E to: End Turn");
         System.out.println("\nPress F to: Save As Recent Game");
         System.out.println("Press G to: Reload Previously Saved Game");
+        gameState = 1;
     }
 
     // MODIFIES: this, Player
@@ -428,6 +423,7 @@ public class GameInterface extends JPanel implements ActionListener {
             jsonWriter.open();
             jsonWriter.writeFile(player1, player2, deck);
             jsonWriter.close();
+            System.out.println("Save Successful!");
             JOptionPane.showMessageDialog(null, "Save Successful!");
         } catch (FileNotFoundException e) {
             System.out.println("File destination not present.");
@@ -445,6 +441,8 @@ public class GameInterface extends JPanel implements ActionListener {
             deck.reloadDeck(jsonReader.readDeck(), jsonReader.readDiscard(), jsonReader.readDown());
             loadBoard();
             displayGUI();
+            startGui();
+            System.out.println("Load Successful!");
             JOptionPane.showMessageDialog(null, "Load Successful!");
         } catch (IOException e) {
             System.out.println("Unable to read from " + JSON_STORE);
@@ -488,9 +486,11 @@ public class GameInterface extends JPanel implements ActionListener {
     // MODIFIES: This
     // EFFECTS: Initializes Frame and Menu values
     public void startGui() {
+        if (!(frame == null)) {
+            frame.dispose();
+        }
         makeFrame();
         makeMenu();
-        //frame.add();
     }
 
     // MODIFIES: This
@@ -499,14 +499,26 @@ public class GameInterface extends JPanel implements ActionListener {
         frame = new JFrame();
         frame.setTitle("Love Letters Virtual");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(500, 500);
+        frame.setSize(800, 800);
+        //frame.getContentPane().setBackground(new Color(222, 184, 135));
+        makeDiscards();
+        frame.setVisible(true);
         frame.setResizable(true);
-        frame.setLayout(null);
-        frame.getContentPane().setBackground(new Color(222, 184, 135));
+        frame.setLayout(new GridLayout());
+
 
         ImageIcon frameLogo = new ImageIcon("src/img_1.png");
         frame.setIconImage(frameLogo.getImage());
     }
+
+    // REQUIRES: makeFrame called prior
+    // MODIFIES: This
+    // EFFECTS: Initializes Menu values
+    public void makeDiscards() {
+        DragAndDrop drag = new DragAndDrop(deck.returnDiscardPile(), (deck.returnCardsInDiscard() - 1));
+        frame.add(drag);
+    }
+
 
     // REQUIRES: makeFrame called prior
     // MODIFIES: This
@@ -529,66 +541,6 @@ public class GameInterface extends JPanel implements ActionListener {
 
     }
 
-
-
-    // EFFECTS: Consumes a Card and returns image of Card
-    public ImageIcon cardToImage(Card card) {
-        ImageIcon image;
-        if (card.returnCardName().equals("Guard")) {
-            image = new ImageIcon("src/Guard.png");
-        } else if (card.returnCardName().equals("Royal Subject")) {
-            image = new ImageIcon("src/RoyalSubject.png");
-        } else if (card.returnCardName().equals("Gossip")) {
-            image = new ImageIcon("src/Gossip.png");
-        } else if (card.returnCardName().equals("Companion")) {
-            image = new ImageIcon("src/Companion.png");
-        } else if (card.returnCardName().equals("Hero")) {
-            image = new ImageIcon("src/Hero.png");
-        } else if (card.returnCardName().equals("Wizard")) {
-            image = new ImageIcon("src/Wizard.png");
-        } else if (card.returnCardName().equals("Lady")) {
-            image = new ImageIcon("src/Lady.png");
-        } else {
-            image = new ImageIcon("src/Princess.png");
-        }
-        return image;
-    }
-
-    public void dragAndDrop() {
-        image = new ImageIcon("src/Hero.png");
-        width = image.getIconWidth();
-        height = image.getIconHeight();
-
-        imageCorner = new Point(0, 0);
-        ClickListener clickListener = new ClickListener();
-        DragListener dragListener = new DragListener();
-        frame.addMouseListener(clickListener);
-        frame.addMouseMotionListener(dragListener);
-    }
-
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        image.paintIcon(frame, g, (int)imageCorner.getX(), (int)imageCorner.getY());
-
-    }
-
-    private class ClickListener extends MouseAdapter {
-        public void mousePressed(MouseEvent e) {
-            prevPt = e.getPoint();
-        }
-
-    }
-
-    private class DragListener extends MouseMotionAdapter {
-        public void mouseDragged(MouseEvent e) {
-            Point currentPt = e.getPoint();
-
-            imageCorner.translate(currentPt.x - prevPt.x,currentPt.y - prevPt.y);
-            prevPt = currentPt;
-            frame.repaint();
-        }
-
-    }
 
     // EFFECTS: Creates actions for menu values
     @Override
