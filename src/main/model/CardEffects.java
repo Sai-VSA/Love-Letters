@@ -134,7 +134,7 @@ public class CardEffects {
             } else {
                 int b = player2.returnSlotWithCard();
                 deck.discardCard(player2.returnPlayerHand()[b]);
-                player2.addCard(deck.drawCard());
+                player2.drawCard();
                 player2.discardCard(player2.returnPlayerHand()[b]);
             }
         } else if (player2.returnPlayerTurn() == true) {
@@ -145,7 +145,7 @@ public class CardEffects {
             } else {
                 int b = player1.returnSlotWithCard();
                 deck.discardCard(player1.returnPlayerHand()[b]);
-                player1.addCard(deck.drawCard());
+                player1.drawCard();
                 player1.discardCard(player1.returnPlayerHand()[b]);
             }
         }

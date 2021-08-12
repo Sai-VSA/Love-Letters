@@ -81,8 +81,11 @@ public class GameInterface extends JPanel implements ActionListener {
         player1 = new Player("player1");
         player2 = new Player("player2");
         deck = new Deck();
-        player1.addCard(deck.drawCard());
-        player2.addCard(deck.drawCard());
+        deck.setPlayers(player1, player2);
+        player1.setDeck(deck);
+        player2.setDeck(deck);
+        player1.drawCard();
+        player2.drawCard();
         gameState = 1;
         turnState = 1;
         playingPlayer = player1;
@@ -208,8 +211,7 @@ public class GameInterface extends JPanel implements ActionListener {
             if (player1.returnDrewCard() == false) {
                 Card a = deck.returnDeck().peek();
                 System.out.println("You drew the " + a.returnCardName() + ".");
-                player1.addCard(deck.drawCard());
-                player1.flipDraw();
+                deck.drawCard();
             } else {
                 System.out.println("Sorry, you already drew this turn.");
             }
@@ -217,8 +219,7 @@ public class GameInterface extends JPanel implements ActionListener {
             if (player2.returnDrewCard() == false) {
                 Card a = deck.returnDeck().peek();
                 System.out.println("\nYou drew the " + a.returnCardName() + ".");
-                player2.addCard(deck.drawCard());
-                player2.flipDraw();
+                deck.drawCard();
             } else {
                 System.out.println("Sorry, you already drew this turn.");
             }
@@ -435,6 +436,9 @@ public class GameInterface extends JPanel implements ActionListener {
             player2 = jsonReader.readP2();
             gameState = jsonReader.readGameState();
             deck.reloadDeck(jsonReader.readDeck(), jsonReader.readDiscard(), jsonReader.readDown());
+            deck.setPlayers(player1, player2);
+            player1.setDeck(deck);
+            player2.setDeck(deck);
             loadBoard();
             displayGUI();
             startGui();

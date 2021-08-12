@@ -11,10 +11,15 @@ import java.util.Arrays;
 
     class TestDeck {
     Deck deck;
+    Player player1;
+    Player player2;
 
     @BeforeEach
     public void setUp() {
+        player1 = new Player("sai");
+        player2 = new Player("two");
         deck = new Deck();
+        deck.setPlayers(player1, player2);
     }
 
     @Test

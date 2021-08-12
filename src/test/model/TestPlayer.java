@@ -12,6 +12,7 @@ public class TestPlayer {
     Card Guard;
     Card Companion;
     Card Princess;
+    Deck deck;
 
     @BeforeEach
     public void setUp() {
@@ -20,27 +21,31 @@ public class TestPlayer {
         Guard = new Card("Guard", 1);
         Companion = new Card("Companion", 4);
         Princess = new Card("Princess", 8);
-
+        deck = new Deck();
+        deck.setPlayers(Player1, Player2);
+        Player1.setDeck(deck);
+        Player2.setDeck(deck);
     }
 
     @Test
     public void testAddCard() {
+        Card i = deck.returnDeck().peek();
         assertEquals(0, Player1.returnHandSize());
-        Player1.addCard(Guard);
-        assertEquals(Guard, Player1.returnPlayerHand()[0]);
-        Player1.addCard(Princess);
-        assertEquals(Princess, Player1.returnPlayerHand()[1]);
+        Player1.drawCard();
+        assertEquals(i, Player1.returnPlayerHand()[0]);
+        i = deck.returnDeck().peek();
+        Player1.drawCard();
+        assertEquals(i, Player1.returnPlayerHand()[1]);
         Player1.discardCard(Guard);
         assertEquals(1, Player1.returnHandSize());
-        Player1.addCard(Companion);
-        assertEquals(Companion, Player1.returnPlayerHand()[0]);
+        i = deck.returnDeck().peek();
+        Player1.drawCard();
+        assertEquals(i, Player1.returnPlayerHand()[0]);
         assertEquals(2, Player1.returnHandSize());
     }
 
     @Test
     public void testDiscardCard() {
-        Player1.addCard(Guard);
-        Player1.addCard(Princess);
         assertEquals(Princess, Player1.discardCard(Princess));
         assertNull(Player1.returnPlayerHand()[1]);
         assertNull(Player1.returnPlayerHand()[1]);
@@ -86,10 +91,11 @@ public class TestPlayer {
 
     @Test
     public void testReturnSlotWithCard() {
-        Player1.addCard(Companion);
+        Card i = deck.returnDeck().peek();
+        Player1.drawCard();
         assertEquals(0, Player1.returnSlotWithCard());
-        Player1.addCard(Guard);
-        Player1.discardCard(Companion);
+        Player1.drawCard();
+        Player1.discardCard(i);
         assertEquals(1, Player1.returnSlotWithCard());
     }
 }

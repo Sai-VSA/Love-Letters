@@ -4,10 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Runner;
 
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Random;
-import java.util.Arrays;
+import java.util.*;
 
 // Represents the shuffled deck, discarded cards and cards excluded from game
 public class Deck implements Runner {
@@ -16,6 +13,7 @@ public class Deck implements Runner {
     private Card[] discardPile;
     private Card[] downCards;
     private boolean empty;
+    protected Player[] players;
 
     Card guard1;
     Card guard2;
@@ -41,9 +39,19 @@ public class Deck implements Runner {
         deck = new LinkedList<Card>();
         downCards = new Card[4];
         discardPile = new Card[11];
+        players = new Player[2];
+
         createCards();
         createUnshuffled();
         randomizeCards();
+    }
+
+    /* MODIFIES: this
+     * EFFECTS: Assigns players to Deck
+     */
+    public void setPlayers(Player player1, Player player2) {
+        players[0] = player1;
+        players[1] = player2;
     }
 
     public void createCards() {
@@ -125,17 +133,23 @@ public class Deck implements Runner {
     }
 
     /* REQUIRES: Deck is not empty
-     * MODIFIES: this
+     * MODIFIES: this, Player
      * EFFECTS: Draws a card from Deck
      * Sets deck to empty if the draw makes deck empty
+     * Draws a card from Deck if playerTurn
      */
     public Card drawCard() {
         if (deck.size() == 1) {
             empty = true;
         }
         Card i = deck.peek();
-        deck.remove();
-
+        for (Player p : players) {
+            if (p.returnPlayerTurn() == true
+                    && p.returnDrewCard() == false) {
+                p.drawCard();
+                p.flipDraw();
+            }
+        }
         return i;
     }
 

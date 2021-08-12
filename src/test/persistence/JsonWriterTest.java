@@ -4,7 +4,6 @@ import model.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,10 +25,10 @@ public class JsonWriterTest {
         try {
             Deck d1 = new Deck();
             Player p1 = new Player("player1");
-            p1.addCard(d1.drawCard());
-            p1.addCard(d1.drawCard());
+            p1.drawCard();
+            p1.drawCard();
             Player p2 = new Player("player2");
-            p2.addCard(d1.drawCard());
+            p2.drawCard();
             JsonWriter writer = new JsonWriter("./data/Test3");
             writer.open();
             writer.writeFile(p1, p2, d1);

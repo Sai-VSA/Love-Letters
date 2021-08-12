@@ -40,4 +40,13 @@ albiet with only two players.
 - As a user, I want to be able save game state to the file.
 - As a user, I want to be able to continue the game again from file.
 
+## Phase 4: Task 2
+- Implemented bi-directional relationship between Player and Deck. 
+- Player uses its drawCard method to draw a card from Deck's deck and add it to playerHand.
+- Deck uses its drawCard method to draw a card from its deck and add it to a playerHand based on playerTurn. 
+- Player's drawCard is used for cardEffects like Hero to draw for a player regardless of playerTurn or drewCard. 
+- Deck's drawCard is used to draw a card at the beginning of turn, which also flips drewCard.
+
+## Phase 4: Task 3
+
 

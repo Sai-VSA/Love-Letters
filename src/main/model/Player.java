@@ -13,6 +13,7 @@ public class Player implements Runner {
     private boolean drewCard;
     private boolean eliminated;
     private boolean immune;
+    protected Deck deck;
 
     /*
      * REQUIRES: playerName is a non-zero length String
@@ -30,16 +31,27 @@ public class Player implements Runner {
     }
 
     /*
-     * REQUIRES: Player has <=1 cards in playerHand
      * MODIFIES: this
-     * EFFECTS: Adds the inputted Card to playerHand
+     * EFFECTS: Assigns Deck to player
      */
-    public void addCard(Card card) {
+    public void setDeck(Deck deck) {
+        this.deck = deck;
+    }
+
+    /*
+     * REQUIRES: Player has <=1 cards in playerHand
+     * MODIFIES: this, Deck
+     * EFFECTS: Draws a Card from deck and adds it to player
+     *          regardless of playerTurn
+     */
+    public void drawCard() {
+        Card i = deck.returnDeck().peek();
         if (playerHand[0] == null) {
-            playerHand[0] = card;
+            playerHand[0] = i;
         } else if (playerHand[1] == null) {
-            playerHand[1] = card;
+            playerHand[1] = i;
         }
+        deck.returnDeck().remove();
     }
 
     /*
