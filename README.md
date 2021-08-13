@@ -48,5 +48,10 @@ albiet with only two players.
 - Deck's drawCard is used to draw a card at the beginning of turn, which also flips drewCard.
 
 ## Phase 4: Task 3
+- If I had more time, I would have made both playerHand and discardPile their own classes.
+- I feel that currently, the Deck and Player have too many responsibilie, leading to low cohesion. 
+- Furthermore, I would transfer features such as gameState or boardState from UI to a different class called gameBoard. 
+- This way, I can test the interactions between the players, deck and cards without having to manually test UI. 
+- It would also make it easier for UI to focus completely on user interaction, while gameBoard could focus on inteeraction between classes
 
 
