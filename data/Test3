@@ -5,12 +5,12 @@
         "immune": false,
         "playerHand": [
             {
-                "cardName": "Companion",
-                "cardNumber": 4
-            },
-            {
                 "cardName": "Guard",
                 "cardNumber": 1
+            },
+            {
+                "cardName": "Gossip",
+                "cardNumber": 3
             }
         ],
         "name": "player1"
@@ -20,8 +20,8 @@
         "drewCard": false,
         "immune": false,
         "playerHand": [{
-            "cardName": "Guard",
-            "cardNumber": 1
+            "cardName": "Gossip",
+            "cardNumber": 3
         }],
         "name": "player2"
     },
@@ -29,40 +29,40 @@
         "discardPile": [],
         "deck": [
             {
-                "cardName": "Royal Subject",
-                "cardNumber": 2
-            },
-            {
-                "cardName": "Guard",
-                "cardNumber": 1
+                "cardName": "Hero",
+                "cardNumber": 5
             },
             {
                 "cardName": "Hero",
                 "cardNumber": 5
             },
             {
-                "cardName": "Princess",
-                "cardNumber": 8
+                "cardName": "Companion",
+                "cardNumber": 4
             },
             {
                 "cardName": "Wizard",
                 "cardNumber": 6
             },
             {
-                "cardName": "Hero",
-                "cardNumber": 5
+                "cardName": "Guard",
+                "cardNumber": 1
             },
             {
-                "cardName": "Gossip",
-                "cardNumber": 3
+                "cardName": "Princess",
+                "cardNumber": 8
             },
             {
                 "cardName": "Guard",
                 "cardNumber": 1
             },
             {
-                "cardName": "Gossip",
-                "cardNumber": 3
+                "cardName": "Lady",
+                "cardNumber": 7
+            },
+            {
+                "cardName": "Royal Subject",
+                "cardNumber": 2
             }
         ],
         "downCards": [
@@ -71,16 +71,16 @@
                 "cardNumber": 4
             },
             {
-                "cardName": "Guard",
-                "cardNumber": 1
-            },
-            {
                 "cardName": "Royal Subject",
                 "cardNumber": 2
             },
             {
-                "cardName": "Lady",
-                "cardNumber": 7
+                "cardName": "Guard",
+                "cardNumber": 1
+            },
+            {
+                "cardName": "Guard",
+                "cardNumber": 1
             }
         ]
     },

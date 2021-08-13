@@ -64,7 +64,7 @@ class TestCard {
      assertEquals("Your opponent discards their hand and draws a new card.", Hero.returnCardAbility());
      assertEquals("Swap hands with your opponent.", Wizard.returnCardAbility());
      assertEquals("You must discard this card if you are holding either the hero"
-             + "or the wizard.", Lady.returnCardAbility());
+             + " or the wizard.", Lady.returnCardAbility());
      assertEquals( "You lose if you discard this card.", Princess.returnCardAbility());
     }
     }
