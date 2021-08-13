@@ -20,10 +20,13 @@ import java.util.Arrays;
         player2 = new Player("two");
         deck = new Deck();
         deck.setPlayers(player1, player2);
+        player2.setDeck(deck);
+        player1.setDeck(deck);
     }
 
     @Test
     public void testDrawCard() {
+        player1.flipTurn();
         assertEquals(12, deck.returnDeck().size());
         deck.drawCard();
         assertEquals(11, deck.returnDeck().size());
@@ -31,8 +34,8 @@ import java.util.Arrays;
         for (int i = 0; i<=10; i++) {
             deck.drawCard();
         }
-        assertEquals(0, deck.returnDeck().size());
-        assertTrue(deck.returnDeckState());
+        assertEquals(11, deck.returnDeck().size());
+        assertFalse(deck.returnDeckState());
     }
 
     @Test
