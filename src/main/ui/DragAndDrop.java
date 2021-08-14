@@ -17,7 +17,7 @@ public class DragAndDrop extends JPanel implements ActionListener {
     private int width;
     private int height;
     private Card[] discards;
-    private int maxArrayNum;
+    private int maxArrayNum = 0;
     private int num1;
     Point imageCorner;
     Point prevPt;
@@ -43,8 +43,8 @@ public class DragAndDrop extends JPanel implements ActionListener {
         if (num >= 0) {
             imageSetter(cardToImage(discards[num1]));
         } else {
-            ImageIcon im = new ImageIcon("data/Images/EmptyDiscard.png");
-            imageSetter(im);
+            currentImage = null;
+            repaint();
         }
 
         ClickListener clickListener = new ClickListener();
@@ -119,11 +119,17 @@ public class DragAndDrop extends JPanel implements ActionListener {
         // bg = new ImageIcon(image2);
         super.paintComponent(g);
        // g.drawImage(bg.getImage(), 0, 0, null);
-        currentImage.paintIcon(this, g, (int) imageCorner.getX(), (int) imageCorner.getY());
+        if (!(currentImage == null)) {
+            currentImage.paintIcon(this, g, (int) imageCorner.getX(), (int) imageCorner.getY());
+        }
         g.setFont(g.getFont().deriveFont(18.0F));
         g.setColor(Color.black);
         g.drawString("Discard", 30, 35);
         g.drawString("Pile", 30, 60);
+        if (maxArrayNum == -1) {
+            g.drawString("Empty Discard", 140, 350);
+            g.drawRect(100,200, 200, 300);
+        }
     }
 
     //MODIFIES: this
@@ -193,23 +199,24 @@ public class DragAndDrop extends JPanel implements ActionListener {
     //EFFECTS: Checks for mouse movement and drags card
     private class DragListener extends MouseMotionAdapter {
         public void mouseDragged(MouseEvent e) {
-            Point currentPt = e.getPoint();
+            if (!(imageCorner == null)) {
+                Point currentPt = e.getPoint();
 
-            imageCorner.translate(currentPt.x - prevPt.x, currentPt.y - prevPt.y);
-            prevPt = currentPt;
-            repaint();
-            if ((clip == null) || !(clip.isOpen()) || (!clip.isActive())) {
-                try {
-                    AudioInputStream audioStream = AudioSystem.getAudioInputStream(cardSlide);
-                    clip = AudioSystem.getClip();
-                    clip.open(audioStream);
-                    clip.start();
-                } catch (Exception a) {
-                    //
+                imageCorner.translate(currentPt.x - prevPt.x, currentPt.y - prevPt.y);
+                prevPt = currentPt;
+                repaint();
+                if ((clip == null) || !(clip.isOpen()) || (!clip.isActive())) {
+                    try {
+                        AudioInputStream audioStream = AudioSystem.getAudioInputStream(cardSlide);
+                        clip = AudioSystem.getClip();
+                        clip.open(audioStream);
+                        clip.start();
+                    } catch (Exception a) {
+                        //
+                    }
                 }
             }
         }
-
     }
 
     // EFFECTS: Consumes a Card and returns image of Card

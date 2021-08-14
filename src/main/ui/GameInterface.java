@@ -539,7 +539,7 @@ public class GameInterface extends JPanel implements ActionListener {
     public void makeFrame() {
         frame = new JFrame();
         frame.setTitle("Love Letters Virtual");
-        frame.setBackground(Color.PINK);
+        frame.setBackground(Color.WHITE);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(Toolkit.getDefaultToolkit().getScreenSize().width,
                 Toolkit.getDefaultToolkit().getScreenSize().height);
