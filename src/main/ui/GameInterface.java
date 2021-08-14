@@ -42,14 +42,11 @@ public class GameInterface extends JPanel implements ActionListener {
 
     // MODIFIES: this
     // EFFECTS: processes user input
+    @SuppressWarnings("checkstyle:MethodLength")
     public void startGame() {
         String userInput = null;
 
         init();
-        if (gameState == 0) {
-            displayGUI();
-            gameState = 1;
-        }
 
         while ((!player1.returnEliminated()) && (!player2.returnEliminated())) {
             userInput = input.next();
@@ -67,6 +64,8 @@ public class GameInterface extends JPanel implements ActionListener {
                 cardPlayer(userInput);
             } else if (gameState == 4) {
                 guardState(userInput);
+            } else if (gameState == 5) {
+                heroState(userInput);
             }
         }
 
@@ -90,10 +89,11 @@ public class GameInterface extends JPanel implements ActionListener {
         turnState = 1;
         playingPlayer = player1;
         player1.flipTurn();
-        gameState = 0;
+        gameState = 1;
         jsonReader = new JsonReader(JSON_STORE);
         jsonWriter = new JsonWriter(JSON_STORE);
         startGui();
+        displayGUI();
     }
 
     // MODIFIES: this
@@ -135,10 +135,9 @@ public class GameInterface extends JPanel implements ActionListener {
                 a = 1;
             }
             lastPlayed = playingPlayer.returnPlayerHand()[a];
-            if (playingPlayer.returnPlayerHand()[a].returnCardNumber() == 1) {
-                gameState = 4;
-                System.out.println("You played Guard.\nType ___ to guess: \nA -> RoyalSubject \nB -> Gossip \nC -> "
-                        + "Companion \nD -> Hero \nE -> Wizard \nF -> Lady \nG -> Princess");
+            if (playingPlayer.returnPlayerHand()[a].returnCardNumber() == 1
+                    || playingPlayer.returnPlayerHand()[a].returnCardNumber() == 5) {
+                assignState(a);
             } else {
                 playCard(playingPlayer.returnPlayerHand()[a]);
             }
@@ -152,12 +151,32 @@ public class GameInterface extends JPanel implements ActionListener {
     }
 
     // MODIFIES: this
+    // EFFECT: Changes game state when Guard or Hero is played
+    private void assignState(int a) {
+        if (playingPlayer.returnPlayerHand()[a].returnCardNumber() == 1) {
+            gameState = 4;
+            System.out.println("You played Guard.\nType ___ to guess: \nA -> RoyalSubject \nB -> Gossip \nC -> "
+                    + "Companion \nD -> Hero \nE -> Wizard \nF -> Lady \nG -> Princess");
+        } else {
+            gameState = 5;
+            System.out.println("You played Hero. Who do you want to target?");
+
+            if (playingPlayer == player1) {
+                System.out.println("A -> Yourself\nB -> " + player2.returnPlayerName());
+            } else {
+                System.out.println("A -> " + player1.returnPlayerName() + "\nB ->  Yourself");
+            }
+
+        }
+    }
+
+    // MODIFIES: this
     // EFFECT: plays guard from player's hand
     private void guardState(String c) {
         ce = new CardEffects(deck, player1, player2);
         deck.discardCard(playingPlayer.discardCard(lastPlayed));
 
-        if (valid(c)) {
+        if (validGuard(c)) {
             if (((turnState == 1) && (player2.returnImmune() == false))
                     || ((turnState == 2) && (player1.returnImmune() == false))) {
                 System.out.println(ce.playGuard(c));
@@ -170,6 +189,30 @@ public class GameInterface extends JPanel implements ActionListener {
             startGui();
         } else {
             System.out.println("Please guess a valid card.");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECT: plays Hero from player's hand
+    private void heroState(String c) {
+        ce = new CardEffects(deck, player1, player2);
+        deck.discardCard(playingPlayer.discardCard(lastPlayed));
+
+        if (c.equalsIgnoreCase("A")
+                || c.equalsIgnoreCase("B")) {
+            if (((turnState == 1) && ((player2.returnImmune() == false) || c.equalsIgnoreCase("A"))
+                    || ((turnState == 2) && (player1.returnImmune() == false || c.equalsIgnoreCase("B"))))) {
+                ce.playHero(c);
+                System.out.println("Hero played successfully!");
+            } else {
+                System.out.println("The chosen opponent was immune this turn.");
+            }
+
+            gameState = 1;
+            displayGUI();
+            startGui();
+        } else {
+            System.out.println("Please guess a valid player.");
         }
     }
 
@@ -192,8 +235,6 @@ public class GameInterface extends JPanel implements ActionListener {
                 System.out.println(ce.playGossip());
             } else if (c.returnCardName().equals("Companion")) {
                 ce.playCompanion();
-            } else if (c.returnCardName().equals("Hero")) {
-                ce.playHero();
             } else if (c.returnCardName().equals("Wizard")) {
                 ce.playWizard();
             } else if (c.returnCardName().equals("Princess")) {
@@ -469,7 +510,7 @@ public class GameInterface extends JPanel implements ActionListener {
 
 
     // EFFECTS: Returns true if String c is a valid value for guard
-    public Boolean valid(String c) {
+    public Boolean validGuard(String c) {
         if (c.equalsIgnoreCase("A")
                 || c.equalsIgnoreCase("B")
                 || c.equalsIgnoreCase("C")
@@ -498,12 +539,15 @@ public class GameInterface extends JPanel implements ActionListener {
     public void makeFrame() {
         frame = new JFrame();
         frame.setTitle("Love Letters Virtual");
+        frame.setBackground(Color.PINK);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(1000, 800);
+        frame.setSize(Toolkit.getDefaultToolkit().getScreenSize().width,
+                Toolkit.getDefaultToolkit().getScreenSize().height);
+        frame.setLayout(null);
         makeDiscards();
         frame.setVisible(true);
         frame.setResizable(false);
-        frame.setLayout(new GridLayout());
+
 
 
         ImageIcon frameLogo = new ImageIcon("data/Images/img_1.png");

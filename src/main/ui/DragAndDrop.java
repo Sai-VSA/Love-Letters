@@ -36,6 +36,10 @@ public class DragAndDrop extends JPanel implements ActionListener {
         maxArrayNum = num;
         num1 = num;
 
+        this.setBounds(160, 160, 400, 600);
+        this.setBackground(Color.white);
+        this.setLayout(null);
+
         if (num >= 0) {
             imageSetter(cardToImage(discards[num1]));
         } else {
@@ -63,17 +67,17 @@ public class DragAndDrop extends JPanel implements ActionListener {
     //EFFECTS: Creates buttons for next and previous cards
     public void setButtons() {
         buttonPrevious = new JButton();
-        buttonPrevious.setPreferredSize(new Dimension(200, 40));
+        buttonPrevious.setBounds(100, 40, 200, 20);
         buttonPrevious.addActionListener(this);
         buttonPrevious.setText("Previous Discard");
 
         buttonNext = new JButton();
-        buttonNext.setPreferredSize(new Dimension(200, 40));
+        buttonNext.setBounds(100, 70, 200, 20);
         buttonNext.addActionListener(this);
         buttonNext.setText("Next Discard");
 
         buttonTop = new JButton();
-        buttonTop.setPreferredSize(new Dimension(200, 40));
+        buttonTop.setBounds(100, 100, 200, 20);
         buttonTop.addActionListener(this);
         buttonTop.setText("Return to Top");
 
@@ -109,16 +113,17 @@ public class DragAndDrop extends JPanel implements ActionListener {
     public void paintComponent(Graphics g) {
      // Table image from
      //https://st3.depositphotos.com/12985656/15711/i/600/depositphotos_157114568-stock-photo-top-view-of-old-shabby.jpg
-        ImageIcon bg = new ImageIcon("data/Images/Table.png");
-        Image image1 = bg.getImage();
-        Image image2 = image1.getScaledInstance(1600, 800, Image.SCALE_SMOOTH);
-        bg = new ImageIcon(image2);
+       //** ImageIcon bg = new ImageIcon("data/Images/Table.png");
+        //Image image1 = bg.getImage();
+        //Image image2 = image1.getScaledInstance(1600, 800, Image.SCALE_SMOOTH);
+        // bg = new ImageIcon(image2);
         super.paintComponent(g);
-        g.drawImage(bg.getImage(), 0, 0, null);
+       // g.drawImage(bg.getImage(), 0, 0, null);
         currentImage.paintIcon(this, g, (int) imageCorner.getX(), (int) imageCorner.getY());
-        g.setFont(g.getFont().deriveFont(20.0F));
-        g.setColor(Color.white);
-        g.drawString("Discard Pile", 30, 35);
+        g.setFont(g.getFont().deriveFont(18.0F));
+        g.setColor(Color.black);
+        g.drawString("Discard", 30, 35);
+        g.drawString("Pile", 30, 60);
     }
 
     //MODIFIES: this
@@ -159,9 +164,9 @@ public class DragAndDrop extends JPanel implements ActionListener {
     public void imageSetter(ImageIcon i) {
         currentImage = i;
         Image image1 = currentImage.getImage();
-        Image image2 = image1.getScaledInstance(300, 420, Image.SCALE_SMOOTH);
+        Image image2 = image1.getScaledInstance(200, 300, Image.SCALE_SMOOTH);
         currentImage = new ImageIcon(image2);
-        imageCorner = new Point(220, 180);
+        imageCorner = new Point(100, 200);
         width = currentImage.getIconWidth();
         height = currentImage.getIconHeight();
         repaint();

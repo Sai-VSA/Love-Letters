@@ -13,6 +13,7 @@ public class TestPlayer {
     Card Companion;
     Card Princess;
     Deck deck;
+    Card[] hand;
 
     @BeforeEach
     public void setUp() {
@@ -25,6 +26,8 @@ public class TestPlayer {
         deck.setPlayers(Player1, Player2);
         Player1.setDeck(deck);
         Player2.setDeck(deck);
+        hand = new Card[2];
+
     }
 
     @Test
@@ -36,18 +39,20 @@ public class TestPlayer {
         i = deck.returnDeck().peek();
         Player1.drawCard();
         assertEquals(i, Player1.returnPlayerHand()[1]);
-        Player1.discardCard(Guard);
+        Player1.discardCard(i);
         assertEquals(1, Player1.returnHandSize());
         i = deck.returnDeck().peek();
         Player1.drawCard();
-        assertEquals(i, Player1.returnPlayerHand()[0]);
+        assertEquals(i, Player1.returnPlayerHand()[1]);
         assertEquals(2, Player1.returnHandSize());
     }
 
     @Test
     public void testDiscardCard() {
+        hand[1] = Princess;
+        hand[0] = Guard;
+        Player1.setHand(hand);
         assertEquals(Princess, Player1.discardCard(Princess));
-        assertNull(Player1.returnPlayerHand()[1]);
         assertNull(Player1.returnPlayerHand()[1]);
         assertEquals(Guard, Player1.discardCard(Guard));
         assertNull(Player1.returnPlayerHand()[0]);

@@ -207,13 +207,13 @@ class TestCardEffects {
         player2.flipTurn();
         assertTrue(player2.returnPlayerTurn());
         c4 = deck.returnDeck().peek();
-        ce.playHero();
+        ce.playHero("A");
         assertEquals(c4.returnCardName(), player1.returnPlayerHand()[player1.returnSlotWithCard()].returnCardName());
         player1.discardCard(c4);
         hand1[0] = (Princess);
         assertEquals("Princess", player1.returnPlayerHand()[player1.returnSlotWithCard()].returnCardName());
         assertFalse(player1.returnEliminated());
-        ce.playHero();
+        ce.playHero("A");
         assertTrue(player1.returnEliminated());
     }
 
@@ -223,13 +223,14 @@ class TestCardEffects {
         hand1[0] = (Hero);
         player1.flipTurn();
         c4 = deck.returnDeck().peek();
-        ce.playHero();
+        ce.playHero("B");
         assertEquals(c4.returnCardName(), player2.returnPlayerHand()[player2.returnSlotWithCard()].returnCardName());
-        ce.playHero();
-        hand2[0] = Princess;
-        assertEquals("Princess", player2.returnPlayerHand()[player2.returnSlotWithCard()].returnCardName());
         assertFalse(player2.returnEliminated());
-        ce.playHero();
+        hand2[0] = Princess;
+        player2.setHand(hand2);
+        assertFalse(player2.returnEliminated());
+        assertEquals("Princess", player2.returnPlayerHand()[player2.returnSlotWithCard()].returnCardName());
+        ce.playHero("B");
         assertTrue(player2.returnEliminated());
     }
 

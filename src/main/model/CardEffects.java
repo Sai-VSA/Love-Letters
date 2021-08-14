@@ -122,34 +122,45 @@ public class CardEffects {
     }
 
 
-    //MODIFIES: Player
-    //EFFECT: Discards opposing players hand and makes them draw,
+    // REQUIRES: String must be either A or B
+    // MODIFIES: Player, Deck
+    // EFFECT: Discards opposing players hand and makes them draw,
     //        Eliminates player if princess is discarded
-    public void playHero() {
+    public void playHero(String str) {
+        Player elim;
         if (player1.returnPlayerTurn() == true) {
-            Player a = player2;
-            Card c = a.returnPlayerHand()[a.returnSlotWithCard()];
-            if ((c.returnCardName() == "Princess" || c.returnCardName() == "Hero")) {
-                player2.setEliminated();
-            } else {
-                int b = player2.returnSlotWithCard();
-                deck.discardCard(player2.returnPlayerHand()[b]);
-                player2.drawCard();
-                player2.discardCard(player2.returnPlayerHand()[b]);
-            }
+            elim = player2;
+            subHero(str, elim);
         } else if (player2.returnPlayerTurn() == true) {
-            Player a = player1;
-            Card c = a.returnPlayerHand()[a.returnSlotWithCard()];
-            if (c.returnCardName() == "Princess" || c.returnCardName() == "Hero") {
-                player1.setEliminated();
-            } else {
-                int b = player1.returnSlotWithCard();
-                deck.discardCard(player1.returnPlayerHand()[b]);
-                player1.drawCard();
-                player1.discardCard(player1.returnPlayerHand()[b]);
-            }
+            elim = player1;
+            subHero(str, elim);
         }
 
+    }
+
+    // REQUIRES: str must be A or B
+    // EFFECT: Helper function for playHero
+    public void subHero(String str, Player elim) {
+        Player a;
+        if (str.equalsIgnoreCase("A")) {
+            a = player1;
+
+        } else  {
+            a = player2;
+        }
+
+        int b = a.returnSlotWithCard();
+        Card c = a.returnPlayerHand()[a.returnSlotWithCard()];
+        deck.discardCard(a.returnPlayerHand()[b]);
+        a.discardCard(a.returnPlayerHand()[b]);
+
+        if (c.returnCardName() == "Princess") {
+            a.setEliminated();
+        } else if (c.returnCardName() == "Hero") {
+            elim.setEliminated();
+        } else {
+            a.drawCard();
+        }
     }
 
     // REQUIRES: Hand not empty
@@ -161,6 +172,7 @@ public class CardEffects {
         player2.setHand(player1.returnPlayerHand());
         player1.setHand(hold);
     }
+
 }
 
 
