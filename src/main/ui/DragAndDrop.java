@@ -5,8 +5,6 @@ import java.awt.event.*;
 import java.io.File;
 import javax.sound.sampled.*;
 import javax.swing.*;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import model.*;
 
@@ -37,7 +35,7 @@ public class DragAndDrop extends JPanel implements ActionListener {
         num1 = num;
 
         this.setBounds(160, 160, 400, 600);
-        this.setBackground(Color.white);
+        this.setOpaque(false);
         this.setLayout(null);
 
         if (num >= 0) {
@@ -119,17 +117,18 @@ public class DragAndDrop extends JPanel implements ActionListener {
         // bg = new ImageIcon(image2);
         super.paintComponent(g);
        // g.drawImage(bg.getImage(), 0, 0, null);
-        if (!(currentImage == null)) {
-            currentImage.paintIcon(this, g, (int) imageCorner.getX(), (int) imageCorner.getY());
-        }
         g.setFont(g.getFont().deriveFont(18.0F));
         g.setColor(Color.black);
         g.drawString("Discard", 30, 35);
         g.drawString("Pile", 30, 60);
-        if (maxArrayNum == -1) {
-            g.drawString("Empty Discard", 140, 350);
-            g.drawRect(100,200, 200, 300);
+
+        g.drawString("Empty Discard", 140, 350);
+        g.drawRect(100,200, 200, 300);
+        if (!(currentImage == null)) {
+            currentImage.paintIcon(this, g, (int) imageCorner.getX(), (int) imageCorner.getY());
         }
+
+
     }
 
     //MODIFIES: this

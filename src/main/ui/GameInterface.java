@@ -34,6 +34,7 @@ public class GameInterface extends JPanel implements ActionListener {
     private JMenuItem load;
 
 
+
     /* EFFECT: starts game
      */
     public GameInterface() throws FileNotFoundException {
@@ -545,6 +546,8 @@ public class GameInterface extends JPanel implements ActionListener {
                 Toolkit.getDefaultToolkit().getScreenSize().height);
         frame.setLayout(null);
         makeDiscards();
+        makeDeck();
+        makeHand();
         frame.setVisible(true);
         frame.setResizable(false);
 
@@ -561,6 +564,23 @@ public class GameInterface extends JPanel implements ActionListener {
         DragAndDrop drag = new DragAndDrop(deck.returnDiscardPile(), (deck.returnCardsInDiscard() - 1));
         frame.add(drag);
     }
+
+    // REQUIRES: makeFrame called prior
+    // MODIFIES: This
+    // EFFECTS: Creates cards from discardPile and related operations
+    public void makeDeck() {
+        RenderDeck renderDeck = new RenderDeck(deck, playingPlayer);
+        frame.add(renderDeck);
+    }
+
+    // REQUIRES: makeFrame called prior
+    // MODIFIES: This
+    // EFFECTS: Creates cards from discardPile and related operations
+    public void makeHand() {
+        RenderHand renderHand = new RenderHand(playingPlayer);
+        frame.add(renderHand);
+    }
+
 
 
     // REQUIRES: makeFrame called prior
