@@ -37,6 +37,7 @@ public class DragAndDrop extends JPanel implements ActionListener {
         this.setBounds(160, 160, 400, 600);
         this.setOpaque(false);
         this.setLayout(null);
+        super.setBackground(Color.black);
 
         if (num >= 0) {
             imageSetter(cardToImage(discards[num1]));
@@ -123,7 +124,7 @@ public class DragAndDrop extends JPanel implements ActionListener {
         g.drawString("Pile", 30, 60);
 
         g.drawString("Empty Discard", 140, 350);
-        g.drawRect(100,200, 200, 300);
+        g.drawRect(100,200, 215, 300);
         if (!(currentImage == null)) {
             currentImage.paintIcon(this, g, (int) imageCorner.getX(), (int) imageCorner.getY());
         }
@@ -169,7 +170,7 @@ public class DragAndDrop extends JPanel implements ActionListener {
     public void imageSetter(ImageIcon i) {
         currentImage = i;
         Image image1 = currentImage.getImage();
-        Image image2 = image1.getScaledInstance(200, 300, Image.SCALE_SMOOTH);
+        Image image2 = image1.getScaledInstance(215, 300, Image.SCALE_SMOOTH);
         currentImage = new ImageIcon(image2);
         imageCorner = new Point(100, 200);
         width = currentImage.getIconWidth();

@@ -2,12 +2,15 @@ package ui;
 
 import model.*;
 
-import java.util.Queue;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.util.Scanner;
 import javax.sound.sampled.*;
 import javax.swing.*;
+
+import static java.awt.event.KeyEvent.VK_B;
+import static java.awt.event.KeyEvent.VK_ENTER;
 
 // Renders the GUI for deck which player can draw from
 public class RenderDeck extends JPanel {
@@ -16,16 +19,17 @@ public class RenderDeck extends JPanel {
     private ImageIcon currentImage;
     private int width;
     private int height;
+    private Scanner input;
     Point imageCorner;
+    JFrame frame;
 
     public RenderDeck(Deck deck, Player player) {
         this.deck = deck;
         this.player = player;
         this.setBounds(1200, 350, 201, 301);
-        this.setBackground(Color.black);
-        this.setOpaque(true);
+        this.setOpaque(false);
         this.setLayout(null);
-
+        super.setBackground(Color.black);
         if (deck.returnDeck().size() <= 0) {
             ///
         } else {
@@ -53,7 +57,7 @@ public class RenderDeck extends JPanel {
         g.drawString("Deck", 400, 200);
 
         g.drawString("Empty Deck", 50, 150);
-        g.drawRect(0,0, 200, 300);
+        g.drawRect(0,0, 215, 300);
         if (!(currentImage == null)) {
             currentImage.paintIcon(this, g, (int) imageCorner.getX(), (int) imageCorner.getY());
         }
@@ -66,7 +70,7 @@ public class RenderDeck extends JPanel {
     public void imageSetter(ImageIcon i) {
         currentImage = i;
         Image image1 = currentImage.getImage();
-        Image image2 = image1.getScaledInstance(200, 300, Image.SCALE_SMOOTH);
+        Image image2 = image1.getScaledInstance(215, 300, Image.SCALE_SMOOTH);
         currentImage = new ImageIcon(image2);
         imageCorner = new Point(0, 0);
         width = currentImage.getIconWidth();
@@ -79,12 +83,13 @@ public class RenderDeck extends JPanel {
     //EFFECTS: Checks for mouse click
     private class ClickListener extends MouseAdapter {
         public void mousePressed(MouseEvent e) {
-            //
+            ///
         }
 
         public void mouseReleased(MouseEvent e) {
             if (player.returnDrewCard() == false) {
                 deck.drawCard();
+                //
             } else {
                 JOptionPane.showMessageDialog(null, player.returnPlayerName()
                         + " already drew card this turn.");

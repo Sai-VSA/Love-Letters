@@ -12,6 +12,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import static java.awt.event.KeyEvent.VK_D;
+
 // Represents the LoveLetters game interface and user interactions
 public class GameInterface extends JPanel implements ActionListener {
     private static final String JSON_STORE = "./data/saveFile.json";
@@ -28,11 +30,14 @@ public class GameInterface extends JPanel implements ActionListener {
     private JsonWriter jsonWriter;
 
     private JFrame frame;
+    private JPanel handPanel;
     private JMenuBar menuBar;
     private JMenu file;
     private JMenuItem save;
     private JMenuItem load;
 
+    private JPanel panel1;
+    String userInput = null;
 
 
     /* EFFECT: starts game
@@ -45,7 +50,6 @@ public class GameInterface extends JPanel implements ActionListener {
     // EFFECTS: processes user input
     @SuppressWarnings("checkstyle:MethodLength")
     public void startGame() {
-        String userInput = null;
 
         init();
 
@@ -93,6 +97,7 @@ public class GameInterface extends JPanel implements ActionListener {
         gameState = 1;
         jsonReader = new JsonReader(JSON_STORE);
         jsonWriter = new JsonWriter(JSON_STORE);
+        handPanel = new JPanel();
         startGui();
         displayGUI();
     }
@@ -128,6 +133,7 @@ public class GameInterface extends JPanel implements ActionListener {
     // MODIFIES: this
     // EFFECT: Opens and activates interface for playing a card
     private void cardPlayer(String command) {
+        startGui();
         int a;
         if (command.equals("a") || command.equals("b")) {
             if (command.equals("a")) {
@@ -266,6 +272,7 @@ public class GameInterface extends JPanel implements ActionListener {
                 System.out.println("Sorry, you already drew this turn.");
             }
         }
+        startGui();
     }
 
 
@@ -449,6 +456,7 @@ public class GameInterface extends JPanel implements ActionListener {
             playingPlayer.flipTurn();
             gameState = 1;
             displayGUI();
+            startGui();
         } else {
             System.out.println("\nPlease finish both draw and play phases before trying to end your turn.");
         }
@@ -540,7 +548,7 @@ public class GameInterface extends JPanel implements ActionListener {
     public void makeFrame() {
         frame = new JFrame();
         frame.setTitle("Love Letters Virtual");
-        frame.setBackground(Color.WHITE);
+        frame.getContentPane().setBackground(Color.WHITE);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(Toolkit.getDefaultToolkit().getScreenSize().width,
                 Toolkit.getDefaultToolkit().getScreenSize().height);
@@ -550,7 +558,6 @@ public class GameInterface extends JPanel implements ActionListener {
         makeHand();
         frame.setVisible(true);
         frame.setResizable(false);
-
 
 
         ImageIcon frameLogo = new ImageIcon("data/Images/img_1.png");
@@ -569,6 +576,7 @@ public class GameInterface extends JPanel implements ActionListener {
     // MODIFIES: This
     // EFFECTS: Creates cards from discardPile and related operations
     public void makeDeck() {
+        panel1 = new JPanel();
         RenderDeck renderDeck = new RenderDeck(deck, playingPlayer);
         frame.add(renderDeck);
     }
@@ -612,12 +620,12 @@ public class GameInterface extends JPanel implements ActionListener {
 
         if (e.getSource() == save) {
             saveState();
-
         } else if (e.getSource() == load) {
             loadState();
         }
 
     }
+
 }
 
 
