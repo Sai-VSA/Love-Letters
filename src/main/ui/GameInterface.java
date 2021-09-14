@@ -1,18 +1,19 @@
 package ui;
 
-import model.*;
+import model.Card;
+import model.CardEffects;
+import model.Deck;
+import model.Player;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
-import java.io.*;
-import java.util.Scanner;
-import java.io.FileNotFoundException;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-
-import static java.awt.event.KeyEvent.VK_D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Scanner;
 
 // Represents the LoveLetters game interface and user interactions
 public class GameInterface extends JPanel implements ActionListener {
@@ -254,7 +255,7 @@ public class GameInterface extends JPanel implements ActionListener {
 
     // MODIFIES: this, player
     // EFFECT: Draws a card from deck and adds it to player's hand
-    private void drawAndReset() {
+    public void drawAndReset() {
         if (turnState == 1) {
             if (player1.returnDrewCard() == false) {
                 Card a = deck.returnDeck().peek();
@@ -568,7 +569,7 @@ public class GameInterface extends JPanel implements ActionListener {
     // MODIFIES: This
     // EFFECTS: Creates cards from discardPile and related operations
     public void makeDiscards() {
-        DragAndDrop drag = new DragAndDrop(deck.returnDiscardPile(), (deck.returnCardsInDiscard() - 1));
+        RenderDiscard drag = new RenderDiscard(deck.returnDiscardPile(), (deck.returnCardsInDiscard() - 1));
         frame.add(drag);
     }
 
@@ -577,7 +578,7 @@ public class GameInterface extends JPanel implements ActionListener {
     // EFFECTS: Creates cards from discardPile and related operations
     public void makeDeck() {
         panel1 = new JPanel();
-        RenderDeck renderDeck = new RenderDeck(deck, playingPlayer);
+        RenderDeck renderDeck = new RenderDeck(deck, playingPlayer, this);
         frame.add(renderDeck);
     }
 
@@ -585,7 +586,7 @@ public class GameInterface extends JPanel implements ActionListener {
     // MODIFIES: This
     // EFFECTS: Creates cards from discardPile and related operations
     public void makeHand() {
-        RenderHand renderHand = new RenderHand(playingPlayer);
+        RenderHand renderHand = new RenderHand(playingPlayer, this);
         frame.add(renderHand);
     }
 

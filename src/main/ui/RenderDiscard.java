@@ -1,16 +1,18 @@
 package ui;
 
+import model.Card;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-import javax.sound.sampled.*;
-import javax.swing.*;
-
-import model.*;
 
 
 // Allows the dragging, dropping and looking through of discarded cards
-public class DragAndDrop extends JPanel implements ActionListener {
+public class RenderDiscard extends JPanel implements ActionListener {
     private ImageIcon currentImage;
     private int width;
     private int height;
@@ -29,7 +31,7 @@ public class DragAndDrop extends JPanel implements ActionListener {
 
 
     //EFFECTS: Initializes DragAndDrop
-    public DragAndDrop(Card[] discard, int num) {
+    public RenderDiscard(Card[] discard, int num) {
         discards = discard;
         maxArrayNum = num;
         num1 = num;

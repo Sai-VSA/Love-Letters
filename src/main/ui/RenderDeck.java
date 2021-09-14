@@ -1,16 +1,13 @@
 package ui;
 
-import model.*;
+import model.Deck;
+import model.Player;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.File;
-import java.util.Scanner;
-import javax.sound.sampled.*;
 import javax.swing.*;
-
-import static java.awt.event.KeyEvent.VK_B;
-import static java.awt.event.KeyEvent.VK_ENTER;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Scanner;
 
 // Renders the GUI for deck which player can draw from
 public class RenderDeck extends JPanel {
@@ -21,11 +18,12 @@ public class RenderDeck extends JPanel {
     private int height;
     private Scanner input;
     Point imageCorner;
-    JFrame frame;
+    GameInterface gameInterface;
 
-    public RenderDeck(Deck deck, Player player) {
+    public RenderDeck(Deck deck, Player player, GameInterface I) {
         this.deck = deck;
         this.player = player;
+        this.gameInterface = I;
         this.setBounds(1200, 350, 201, 301);
         this.setOpaque(false);
         this.setLayout(null);
@@ -88,7 +86,7 @@ public class RenderDeck extends JPanel {
 
         public void mouseReleased(MouseEvent e) {
             if (player.returnDrewCard() == false) {
-                deck.drawCard();
+                gameInterface.drawAndReset();
                 //
             } else {
                 JOptionPane.showMessageDialog(null, player.returnPlayerName()

@@ -1,11 +1,10 @@
 package ui;
 
-import model.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.io.File;
-import javax.sound.sampled.*;
+import model.Card;
+import model.Player;
+
 import javax.swing.*;
+import java.awt.*;
 
 public class RenderHand extends JPanel {
     private Player player;
@@ -19,9 +18,10 @@ public class RenderHand extends JPanel {
     Point imageCorner1 = new Point(120,20);
     Point imageCorner2 = new Point(220,20);
     Point imageCorner3 = new Point(320,20);
-
-    public RenderHand(Player player) {
+    GameInterface gameInterface;
+    public RenderHand(Player player, GameInterface I) {
         this.player = player;
+        gameInterface = I;
         handSize = player.returnHandSize();
         this.setBounds(400, 800, 800, 500);
         super.setOpaque(false);
